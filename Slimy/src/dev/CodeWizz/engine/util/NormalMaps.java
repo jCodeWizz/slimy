@@ -11,8 +11,6 @@ public class NormalMaps {
 	public void load() {
 		WDebug.log("[System]: Loading normal maps...");
 		
-		list.put("leaves", new Image("/assets/textures/objects/tree/leavesNormalMap.png"));
-		
 		WDebug.log("[System]: Loaded in " + list.size() + " normal map!");
 	}
 	

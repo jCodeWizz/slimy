@@ -48,7 +48,7 @@ public class Renderer {
 		lm = new int[p.length];
 		lb = new int[p.length];
 
-		font = Font.DETAILED;
+		//font = Font.DETAILED;
 	}
 
 	public void setPixel(int x, int y, int value) {
@@ -355,6 +355,39 @@ public class Renderer {
 			}
 		}
 	}
+	
+	public void drawLine(int color, int x0, int y0, int x1, int y1) {
+		int dx = Math.abs(x1 - x0);
+		int dy = Math.abs(y1 - y0);
+
+		int sx = x0 < x1 ? 1 : -1;
+		int sy = y0 < y1 ? 1 : -1;
+
+		int err = dx - dy;
+		int e2;
+
+		while (true) {
+
+			setPixel(x0, y0, color);
+			
+			if (x0 == x1 && y0 == y1) {
+				break;
+			}
+
+			e2 = 2 * err;
+
+			if (e2 > -1 * dy) {
+				err -= dy;
+				x0 += sx;
+			}
+
+			if (e2 < dx) {
+				err += dx;
+				y0 += sy;
+			}
+		}
+	}
+
 
 	public void setLightMap(int x, int y, int value) {
 
@@ -789,7 +822,7 @@ public class Renderer {
 	public void clear() {
 
 		for (int i = 0; i < p.length; i++) {
-			p[i] = dayColor;
+			p[i] = 0;
 			zb[i] = 0;
 			lm[i] = ambientColor;
 			lb[i] = 0;
