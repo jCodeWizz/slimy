@@ -48,7 +48,7 @@ public class Renderer {
 		lm = new int[p.length];
 		lb = new int[p.length];
 
-		//font = Font.DETAILED;
+		font = Font.STANDARD;
 	}
 
 	public void setPixel(int x, int y, int value) {
@@ -822,7 +822,7 @@ public class Renderer {
 	public void clear() {
 
 		for (int i = 0; i < p.length; i++) {
-			p[i] = 0;
+			p[i] = 0xff70fade;
 			zb[i] = 0;
 			lm[i] = ambientColor;
 			lb[i] = 0;

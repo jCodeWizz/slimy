@@ -10,16 +10,20 @@ import dev.CodeWizz.engine.util.UIID;
 public class DropDown implements IHudComponent {
 	
 	private int x, y, w, fw, selectedOption;
-	private String[] options;
+	private int[] options;
 	private boolean open, justOpened;
 	private IDropDownListener listener;
 	
-	public DropDown(int x, int y, int w, int ao, IDropDownListener listener) {
+	public DropDown(int x, int y, int w, int ao, IDropDownListener listener, int... values) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
-		options = new String[ao];
+		options = new int[ao];
 		this.listener = listener;
+		
+		for(int i = 0; i < ao; i++) {
+			options[i] = values[i];
+		}
 		
 		fw = 16 + options.length*16;
 	}
@@ -40,13 +44,16 @@ public class DropDown implements IHudComponent {
 		if(open) {
 			r.fillRectUI(x, y, w, 16, 0xff868f8d, Light.NONE);
 			r.drawRectUI(x, y, w, 16, 0xff000000, Light.NONE);
+			r.drawText(options[selectedOption] + "", x, y, 2, 0xff000000);
 			for(int i = 0; i < options.length; i++) {
 				r.fillRectUI(x, y + i*16 + 16, w, 16, 0xffffffff, Light.NONE);
+				r.drawText(options[i] + "", x, y + i*16 + 16, 2, 0xff000000);
 				r.drawRectUI(x, y + i*16 + 16, w, 16, 0xff000000, Light.NONE);
 			}
 		} else {
 			r.fillRectUI(x, y, w, 16, 0xffffffff, Light.NONE);
 			r.drawRectUI(x, y, w, 16, 0xff000000, Light.NONE);
+			r.drawText(options[selectedOption] + "", x, y, 2, 0xff000000);
 		}
 	}
 
