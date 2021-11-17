@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
-import dev.CodeWizz.engine.gfx.Font;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.util.UIID;
 

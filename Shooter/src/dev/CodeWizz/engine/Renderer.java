@@ -822,7 +822,7 @@ public class Renderer {
 	public void clear() {
 
 		for (int i = 0; i < p.length; i++) {
-			p[i] = 0xff70fade;
+			p[i] = dayColor;
 			zb[i] = 0;
 			lm[i] = ambientColor;
 			lb[i] = 0;
