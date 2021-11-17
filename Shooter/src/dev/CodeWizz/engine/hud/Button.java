@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
+import dev.CodeWizz.engine.gfx.Font;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.util.UIID;
 
@@ -30,7 +31,7 @@ public class Button implements IHudComponent {
 	public void render(GameContainer gc, Renderer r) {
 		r.fillRectUI(x, y, w, h, 0xffffffff, Light.NONE);
 		r.drawRectUI(x, y, w, h, 0xff000000, Light.NONE);
-		//r.drawText(text, x + w/2 - Font.DETAILED.getWidth(text)/2, y + h/2 - 8, 0xff000000);
+		r.drawText(text, x + w/2 - Font.DETAILED.getWidth(text)/2, y + h/2 - 8, 0xff000000);
 	}
 	
 	@Override

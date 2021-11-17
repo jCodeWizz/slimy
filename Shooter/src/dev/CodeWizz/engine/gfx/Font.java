@@ -3,6 +3,7 @@ package dev.CodeWizz.engine.gfx;
 public class Font {
 
 	public static final Font STANDARD = new Font("/assets/fonts/standard.png", 59);
+	public static final Font DETAILED = new Font("/assets/fonts/detailed.png", 95);
 	
 	
 	private Image fontImage;
