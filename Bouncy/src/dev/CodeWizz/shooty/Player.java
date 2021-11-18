@@ -18,7 +18,7 @@ public class Player {
 	private Vector position, speed, acc;
 	private int w = 16, h = 16;
 	private final float mass = 20, gravity = 9.81f/30;
-	private final float moveSpeed = 0.5f * mass, friction = -0.5f, bounceConstant = -0.25f;	
+	private final float moveSpeed = 0.5f * mass, friction = -0.5f, bounceConstant = -1.1f;	
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	
 	public Player() {
@@ -54,6 +54,13 @@ public class Player {
 		} else {
 			forces.add(new Vector(speed.x*friction*mass, 0));
 		}
+		
+		// LUCHT WEERSTAND
+		
+		forces.add(new Vector(0, 0));
+		
+		
+		
 		
 		
 		acc.devide(mass);
@@ -110,7 +117,7 @@ public class Player {
 	}
 	
 	public void render(GameContainer gc, Renderer r) {
-		r.fillRect((int) position.x, (int) position.y, w, h, 0xffffffff, Light.NONE);
+		r.fillRect((int) position.x, (int) position.y, w, h, 0xffff00dd, Light.NONE);
 		
 		for(Vector vec : forces) {
 		//	r.drawLine(0xffff0000, (int) (position.x + 8), (int) (position.y + 8), (int) (position.x + 8 + vec.x*5), (int) (position.y + 8 + vec.y*5));
@@ -118,7 +125,8 @@ public class Player {
 		
 		//r.drawLine(0xffffff00, (int) (position.x + 8), (int) (position.y + 8), (int) (position.x + 8 + acc.x*200 ), (int) (position.y + 8 + acc.y*200));
 		
-		
+		r.drawText("Gas x: " + speed.x, 10, 10);
+		r.drawText("Gas y: " + speed.y, 10, 30);
 	}
 	public Rectangle getBoundsLeft() {
 		return new Rectangle((int) position.x, (int) position.y + 2, (int) (w / 2), (int) h - 4);

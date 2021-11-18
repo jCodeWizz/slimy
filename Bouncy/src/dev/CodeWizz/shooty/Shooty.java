@@ -36,7 +36,7 @@ public class Shooty extends AbstractGame {
 		
 		player.init(gc);
 		
-		gc.handler.addObject(new Box(0, gc.getHeight()-32, gc.getWidth(), 32, 0xffffffff, Light.NONE));
+		gc.handler.addObject(new Box(0, gc.getHeight()-32, gc.getWidth(), 32, 0xffa17c9c, Light.NONE));
 	}
 	
 	public static void main(String[] args) {
