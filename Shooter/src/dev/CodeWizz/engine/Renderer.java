@@ -17,8 +17,8 @@ public class Renderer {
 
 	private int pW, pH;
 
-	public int ambientColor = 0xffabccff;
-	private int dayColor = 0xffabccff;
+	public int ambientColor = 0xffffffff;
+	private int dayColor = 0xff000000;
 
 	private Font font;
 
