@@ -21,7 +21,7 @@ public class Player {
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	
 	public Player() {
-		position = new Vector(100, 100);
+		position = new Vector(400, 400);
 		speed = new Vector();
 		acc = new Vector();
 	}
@@ -43,6 +43,11 @@ public class Player {
 			forces.clear();
 		}
 		
+		if(gc.getInput().isButton(1)) {
+			float angle = (float) Math.atan2(gc.getInput().getMouseY() - position.y - 8,-8 + gc.getInput().getMouseX() - position.x);
+			gc.handler.addObject(new Bullet(position.x + 8, position.y + 8, new Vector((float)Math.cos(angle), (float)Math.sin(angle)), 12));
+		}
+		
 		input(gc);
 		collision(gc);
 	}
@@ -57,17 +62,17 @@ public class Player {
 				
 				if(object.getBounds().intersects(getBoundsTop())) {
 					speed.y = 0;
-					position.y = object.getY() - object.getH();
+					position.y = object.getY() + object.getH();
 				}
 				
 				if(object.getBounds().intersects(getBoundsLeft())) {
-					position.x = object.getX() + object.getW();
 					speed.x = 0;
+					position.x = object.getX() + object.getW();
 				}
 				
 				if(object.getBounds().intersects(getBoundsRight())) {
-					position.x = object.getX() - w;
 					speed.x = 0;
+					position.x = object.getX() - w;
 				}
 			}
 		}
@@ -147,5 +152,37 @@ public class Player {
 
 	public Rectangle getBoundsTop() {
 		return new Rectangle((int) position.x + 2, (int) position.y, (int) w - 4, (int) (h / 2));
+	}
+
+	public Vector getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector position) {
+		this.position = position;
+	}
+
+	public Vector getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(Vector speed) {
+		this.speed = speed;
+	}
+
+	public Vector getAcc() {
+		return acc;
+	}
+
+	public void setAcc(Vector acc) {
+		this.acc = acc;
+	}
+
+	public List<Vector> getForces() {
+		return forces;
+	}
+
+	public void setForces(List<Vector> forces) {
+		this.forces = forces;
 	}
 }

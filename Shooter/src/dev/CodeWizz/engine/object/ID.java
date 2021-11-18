@@ -6,6 +6,7 @@ public enum ID {
 	Tree(),
 	Box(),
 	FallingTile(),
+	Bullet(),
 	Rock(),
 	Cow();
 }

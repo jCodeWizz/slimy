@@ -1,6 +1,7 @@
 package dev.CodeWizz.engine.gfx;
 
 import dev.CodeWizz.engine.GameContainer;
+import dev.CodeWizz.shooty.Shooty;
 
 public class Camera {
 
@@ -8,6 +9,8 @@ public class Camera {
 	
 	public void update(GameContainer gc) {
 		
+		x = (int) Shooty.inst.getPlayer().getPosition().x - 8 - gc.getWidth() / 2;
+		y = (int) Shooty.inst.getPlayer().getPosition().y - 8 - gc.getHeight() / 2;
 		gc.getRenderer().setCamX(x);
 		gc.getRenderer().setCamY(y);
 	}

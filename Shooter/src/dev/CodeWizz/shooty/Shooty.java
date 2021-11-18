@@ -8,9 +8,12 @@ import dev.CodeWizz.engine.hud.Button;
 
 public class Shooty extends AbstractGame {
 
+	public static Shooty inst;
+	
 	private Player player;
 	
 	public Shooty() {
+		inst = this;
 		player = new Player();
 	}
 	
@@ -54,5 +57,13 @@ public class Shooty extends AbstractGame {
 		GameContainer gc = new GameContainer(new Shooty());
 		GameContainer.showInfo();
 		gc.start();
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }

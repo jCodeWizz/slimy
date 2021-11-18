@@ -20,9 +20,10 @@ public class Particle {
 	private Image image;
 	private int size;
 	private int color;
-	private final float gravity = 0.1f;
+	private float gravity = 0.0f;
 	private boolean falling = true;
 	private int timer = 0;
+	
 	
 
 	public static List<Particle> list = new CopyOnWriteArrayList<>();
@@ -42,7 +43,11 @@ public class Particle {
 		//result = true || false ? x : y;
 		
 		velX = r.nextBoolean() ? (r.nextInt(vel) + r.nextFloat() / 2) : -(r.nextInt(vel) + r.nextFloat() / 2);
-		velY = -(r.nextInt(vel) + r.nextFloat() / 2);
+		if(gravity == 0.0f) {
+			velY = r.nextBoolean() ? (r.nextInt(vel) + r.nextFloat() / 2) : -(r.nextInt(vel) + r.nextFloat() / 2);
+		} else {
+			velY = -(r.nextInt(vel) + r.nextFloat() / 2);
+		}
 		
 		
 	}
@@ -65,8 +70,11 @@ public class Particle {
 		//result = true || false ? x : y;
 		
 		velX = r.nextBoolean() ? (r.nextInt(vel) + r.nextFloat() / 2) : -(r.nextInt(vel) + r.nextFloat() / 2);
-		velY = -(r.nextInt(vel) + r.nextFloat() / 2);
-		
+		if(gravity == 0.0f) {
+			velY = r.nextBoolean() ? (r.nextInt(vel) + r.nextFloat() / 2) : -(r.nextInt(vel) + r.nextFloat() / 2);
+		} else {
+			velY = -(r.nextInt(vel) + r.nextFloat() / 2);
+		}
 		image.setAlpha(false);
 		image.setLightBlock(Light.NONE);
 		
@@ -97,6 +105,18 @@ public class Particle {
 		else
 			list.remove(this);
 		
+		if(gravity == 0.0f) {
+			if(velX > 0) {
+				velX-=0.01;
+			} else if(velX < 0) {
+				velX+=0.01;
+			}
+			if(velY > 0) {
+				velY-=0.01;
+			} else if(velY < 0) {
+				velY+=0.01;
+			}
+		}
 	}
 
 	public void render(GameContainer gc, Renderer r) {
