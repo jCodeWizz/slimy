@@ -16,7 +16,7 @@ public class Player {
 	
 	private Vector position, speed, acc;
 	private int w = 16, h = 16;
-	private boolean falling, jumping;
+	private final float moveSpeed = 0.5f, deMoveSpeed = 0.5f;
 	
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	
@@ -43,12 +43,6 @@ public class Player {
 			forces.clear();
 		}
 		
-		if(falling || jumping) {
-			forces.add(new Vector(0, 0.5f));
-		}
-		
-		
-		
 		input(gc);
 		collision(gc);
 	}
@@ -57,16 +51,11 @@ public class Player {
 		for(GameObject object : gc.handler.object) {
 			if(object.getId() == ID.Box) {
 				if(object.getBounds().intersects(getBoundsBottom())) {
-					falling = false;
-					jumping = false;
 					speed.y = 0;
 					position.y = object.getY() - h;
-				} else {
-					falling = true;
 				}
 				
 				if(object.getBounds().intersects(getBoundsTop())) {
-					falling = true;
 					speed.y = 0;
 					position.y = object.getY() - object.getH();
 				}
@@ -88,21 +77,21 @@ public class Player {
 	private void input(GameContainer gc) {
 		if(gc.getInput().isKey(KeyEvent.VK_A)) {
 			if(speed.x > -5) {
-				forces.add(new Vector(-1f, 0));
+				forces.add(new Vector(-moveSpeed, 0));
 			}
 		} 
 		
 		if(gc.getInput().isKey(KeyEvent.VK_D)) {
 			if(speed.x < 5) {
-				forces.add(new Vector(1f, 0));
+				forces.add(new Vector(moveSpeed, 0));
 			}
 		}
 		
 		if(!gc.getInput().isKey(KeyEvent.VK_D) && !gc.getInput().isKey(KeyEvent.VK_A)) {
 			if(speed.x > 0) {
-				forces.add(new Vector(-1, 0));
+				forces.add(new Vector(-deMoveSpeed, 0));
 			} else if(speed.x < 0) {
-				forces.add(new Vector(1, 0));
+				forces.add(new Vector(deMoveSpeed, 0));
 			}
 			
 			if(speed.x > -2 && speed.x < 2) {
@@ -111,12 +100,34 @@ public class Player {
 			}
 		}
 		
-		if(gc.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
-			if(!jumping && !falling) {
-				jumping = true;
-				forces.add(new Vector(0, -9));
+		if(gc.getInput().isKey(KeyEvent.VK_W)) {
+			if(speed.y > -5) {
+				forces.add(new Vector(0, -moveSpeed));
+			}
+		} 
+		
+		if(gc.getInput().isKey(KeyEvent.VK_S)) {
+			if(speed.y < 5) {
+				forces.add(new Vector(0, moveSpeed));
 			}
 		}
+		
+		if(!gc.getInput().isKey(KeyEvent.VK_W) && !gc.getInput().isKey(KeyEvent.VK_S)) {
+			if(speed.y > 0) {
+				forces.add(new Vector(0, -moveSpeed));
+			} else if(speed.y < 0) {
+				forces.add(new Vector(0, moveSpeed));
+			}
+			
+			if(speed.y > -2 && speed.y < 2) {
+				speed.y = 0;
+				acc.y = 0;
+			}
+		}
+		
+
+	
+	
 	}
 	
 	public void render(GameContainer gc, Renderer r) {
