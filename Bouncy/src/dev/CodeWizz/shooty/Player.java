@@ -2,6 +2,7 @@ package dev.CodeWizz.shooty;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,14 +18,18 @@ public class Player {
 	private boolean falling;
 	private Vector position, speed, acc;
 	private int w = 16, h = 16;
-	private final float mass = 20, gravity = 9.81f/30;
-	private final float moveSpeed = 0.5f * mass, friction = -0.5f, bounceConstant = -1.1f;	
+	private final float mass = 20, gravity = 9.81f/20;
+	private final float moveSpeed = 0.5f * mass, friction = -0.1f, bounceConstant = -0.5f, airFrictionX = 0.05f, airFrcitionY = 0.02f;	
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
+	private ArrayList<ID> collisionID = new ArrayList<>();
 	
 	public Player() {
-		position = new Vector(400, 400);
+		position = new Vector(200, 400);
 		speed = new Vector();
 		acc = new Vector();
+		
+		collisionID.add(ID.Box);
+		collisionID.add(ID.Bullet);
 	}
 	
 	public void init(GameContainer gc) {
@@ -32,8 +37,6 @@ public class Player {
 	}
 	
 	public void update(GameContainer gc) {
-		speed.add(acc);
-		position.add(speed);
 		
 		acc.clear();
 		
@@ -46,7 +49,7 @@ public class Player {
 		}
 		
 		if(gc.getInput().isKeyDown(KeyEvent.VK_SPACE)) {
-			forces.add(new Vector(0, -75));
+			forces.add(new Vector(0, -175));
 		}
 		
 		if(falling) {
@@ -57,47 +60,157 @@ public class Player {
 		
 		// LUCHT WEERSTAND
 		
-		forces.add(new Vector(0, 0));
+		if(speed.y > 0) {
+			forces.add(new Vector(0, 0.5f*-airFrcitionY*speed.y*speed.y));
+		} else {
+			forces.add(new Vector(0, 0.5f*airFrcitionY*speed.y*speed.y));
+
+		}
 		
-		
+		if(speed.x > 0) {
+			forces.add(new Vector(0.5f*-airFrictionX*speed.x*speed.x, 0));
+		} else {
+			forces.add(new Vector(0.5f*airFrictionX*speed.x*speed.x, 0));
+		}
 		
 		
 		
 		acc.devide(mass);
 		
+		speed.add(acc);
 		input(gc);
-		collision(gc);
+		collisionX(gc);
+		collisionY(gc);
 		
+		if(speed.x > -0.1f && speed.x < 0.1f)
+			speed.x = 0;
+		
+		if(speed.y > -0.1f && speed.y < 0.1f)
+			speed.y = 0;
 		
 	}
 	
-	private void collision(GameContainer gc) {
-		for(GameObject object : gc.handler.object) {
-			if(object.getId() == ID.Box) {
-				if(object.getBounds().intersects(getBoundsBottom())) {
-					forces.add(new Vector(0, speed.y * bounceConstant * mass));
-					falling = false;
-					speed.y = 0;
-					position.y = object.getY() - h;
-					return;
+	private void collisionX(GameContainer gc) {
+		boolean collided = false;
+
+		if (speed.x > 0) {
+			for (int i = 0; i < (int)speed.x; i++) {
+				for (GameObject object : gc.handler.object) {
+					if (collisionID.contains(object.getId())) {
+						if (new Rectangle((int) position.x + 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
+							
+							if(object.canMove()) {
+								collision(object);
+							} else {
+								collided = true;
+							}
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(speed.x * bounceConstant * mass, 0));
+					speed.x = 0;
+					continue;
 				} else {
+					position.x++;
+				}
+			}
+		} else if (speed.x < 0) {
+			for (int i = 0; i > (int)speed.x; i--) {
+				for (GameObject object : gc.handler.object) {
+					if (collisionID.contains(object.getId())) {
+						if (new Rectangle((int) position.x - 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
+							
+							if(object.canMove()) {
+								collision(object);
+							} else {
+								collided = true;
+							}
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(speed.x * bounceConstant * mass, 0));
+					speed.x = 0;
+					continue;
+				} else {
+					position.x--;
+				}
+			}
+		}
+	}
+	
+	private void collision(GameObject object) {
+		forces.add(new Vector(mass * object.getMass() * speed.x * -0.1f, 0));
+		object.getForces().add(new Vector(mass * object.getMass() * speed.x * 0.01f, 0));
+	}
+	
+	private void collisionY(GameContainer gc) {
+		boolean collided = false;
+
+		if (speed.y >= 1) {
+			for (int i = 0; i < (int)speed.y; i++) {
+				for (GameObject object : gc.handler.object) {
+					if (collisionID.contains(object.getId())) {
+						if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(0, speed.y * bounceConstant * mass));
+					speed.y = 0;
+					falling = false;
+					continue;
+				} else {
+					position.y++;
 					falling = true;
 				}
-				
-				if(object.getBounds().intersects(getBoundsTop())) {
+			}
+		} else if (speed.y <= -1) {
+			for (int i = 0; i > (int)speed.y; i--) {
+				for (GameObject object : gc.handler.object) {
+					if (collisionID.contains(object.getId())) {
+						if (new Rectangle((int) position.x, (int) position.y - 1, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(0, speed.y * bounceConstant * mass));
 					speed.y = 0;
-					position.y = object.getY() + object.getH();
+					falling = false;
+					continue;
+				} else {
+					position.y--;
+					falling = true;
 				}
-				
-				if(object.getBounds().intersects(getBoundsLeft())) {
-					speed.x = 0;
-					position.x = object.getX() + object.getW();
+			}
+		} else if(speed.y > - 1 && speed.y < 1) {
+			for (GameObject object : gc.handler.object) {
+				if (collisionID.contains(object.getId())) {
+					if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
+						collided = true;
+						continue;
+					}
 				}
-				
-				if(object.getBounds().intersects(getBoundsRight())) {
-					speed.x = 0;
-					position.x = object.getX() - w;
-				}
+			}
+
+			if (collided) {
+				speed.y = 0;
+				falling = false;
+				return;
+			} else {
+				position.y++;
+				falling = true;
 			}
 		}
 	}
@@ -119,9 +232,9 @@ public class Player {
 	public void render(GameContainer gc, Renderer r) {
 		r.fillRect((int) position.x, (int) position.y, w, h, 0xffff00dd, Light.NONE);
 		
-		for(Vector vec : forces) {
+		//for(Vector vec : forces) {
 		//	r.drawLine(0xffff0000, (int) (position.x + 8), (int) (position.y + 8), (int) (position.x + 8 + vec.x*5), (int) (position.y + 8 + vec.y*5));
-		}
+		//}
 		
 		//r.drawLine(0xffffff00, (int) (position.x + 8), (int) (position.y + 8), (int) (position.x + 8 + acc.x*200 ), (int) (position.y + 8 + acc.y*200));
 		

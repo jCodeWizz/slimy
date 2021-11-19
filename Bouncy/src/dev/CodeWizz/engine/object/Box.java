@@ -18,20 +18,18 @@ public class Box extends GameObject {
 		
 		this.color = color;
 		this.lightblock = lightblock;
-		
-		
 	}
 
 	@Override
 	public void render(GameContainer gc, Renderer r) {
-		r.fillRect((int)x, (int)y, (int)w, (int)h, color, lightblock);
+		r.fillRect((int)position.x, (int)position.y, (int)w, (int)h, color, lightblock);
 	}
 	
 	@Override
 	public void destroy(GameContainer gc) {
 		for(int xx = 0; xx < w/4; xx++) {
 			for(int yy = 0; yy < h/4; yy++) {
-				Particle.add(new Particle((int)x + xx*4, (int)y + yy*4, 0xffffffff, 4, 100, 2));
+				Particle.add(new Particle((int)position.x + xx*4, (int)position.y + yy*4, 0xffffffff, 4, 100, 2));
 			}
 		}
 		

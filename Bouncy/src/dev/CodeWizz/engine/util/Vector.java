@@ -29,6 +29,10 @@ public class Vector {
 		this.y *= vec.y;
 	}
 	
+	public Vector negative() {
+		return new Vector(x *= -1, y *= -1);
+	}
+	
 	public void clear() {
 		this.x = 0;
 		this.y = 0;

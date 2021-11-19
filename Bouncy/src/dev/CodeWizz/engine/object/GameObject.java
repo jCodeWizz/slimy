@@ -2,20 +2,24 @@ package dev.CodeWizz.engine.object;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.particles.Particle;
-import dev.CodeWizz.engine.util.WMath;
+import dev.CodeWizz.engine.util.Vector;
 
 public abstract class GameObject {
 
-	protected float x, y, w = 16, h = 16, velX, velY;
+	protected float w = 16, h = 16;
 	protected ID id;
-	protected float gravity = 0.2f, slide = 0.2f, bounce = 0.2f;
-	protected float maxVelX = 5f, maxVelY = 7.5f;
+	protected float gravity = 9.81f/20f, friction = -0.1f, bounce = -0.5f, mass = 20, airFrictionY = 0.2f, airFrictionX = 0.05f;
 	protected boolean falling, jumping;
 	protected float health;
+	
+	protected Vector position, speed, acc;
+	protected List<Vector> forces = new CopyOnWriteArrayList<>();
 	
 	protected boolean hurt;
 	protected int hurtTime,  offsetHitboxes = 2;
@@ -24,11 +28,11 @@ public abstract class GameObject {
 	protected ArrayList<String> tags = new ArrayList<>();
 	protected boolean canMove;
 
-	protected boolean hasGravity, hasCollision, isSlippery, isBouncy;
 
 	public GameObject(float x, float y) {
-		this.x = x;
-		this.y = y;
+		position = new Vector(x, y);
+		speed = new Vector();
+		acc = new Vector();
 	}
 	
 	public void destroy(GameContainer gc) {
@@ -87,90 +91,184 @@ public abstract class GameObject {
 		}
 		
 		if(canMove) {
-			if (hasGravity && (falling || jumping) && velY < maxVelY) {
-				velY += gravity;
+			
+			acc.clear();
+			
+			if(!forces.isEmpty()) {
+				for(Vector vec : forces) {
+					acc.add(vec);
+				}
+				forces.clear();
 			}
-
-			if (!gameObjectCollisionID.isEmpty() && hasCollision) {
+			
+			if(falling) {
+				forces.add(new Vector(0, mass * gravity));
+			} else {
+				forces.add(new Vector(speed.x*friction*mass, 0));
+			}
+			
+			// LUCHT WEERSTAND
+			
+			if(speed.y > 0) {
+				forces.add(new Vector(0, 0.5f*-airFrictionY*speed.y*speed.y));
+			} else {
+				forces.add(new Vector(0, 0.5f*airFrictionY*speed.y*speed.y));
+			}
+			
+			if(speed.x > 0) {
+				forces.add(new Vector(0.5f*-airFrictionX*speed.x*speed.x, 0));
+			} else {
+				forces.add(new Vector(0.5f*airFrictionX*speed.x*speed.x, 0));
+			}
+			
+			acc.devide(mass);
+			speed.add(acc);
+			
+			collisionX(gc);
+			collisionY(gc);
+		
+			if(speed.x > -0.1f && speed.x < 0.1f)
+				speed.x = 0;
+			
+			if(speed.y > -0.1f && speed.y < 0.1f)
+				speed.y = 0;
+		}
+	}
+	
+	private void collisionX(GameContainer gc) {
+		boolean collided = false;
+		if (speed.x > 0) {
+			for (int i = 0; i < (int)speed.x; i++) {
 				for (GameObject object : gc.handler.object) {
-					if (!object.equals(this) && gameObjectCollisionID.contains(object.id)) {
-						if(getBoundsBottom().intersects(object.getBounds())) {
-							velY = 0;
-							falling = false;
-							jumping = false;
-							y = object.getY() - h;
-							collided(gc, object);
-						} else {
-							falling = true;
-						}
-						
-						if(getBoundsTop().intersects(object.getBounds())) {
-							velY = 0;
-							falling = false;
-							jumping = false;
-							y = object.getY() + (int) object.getBounds().getHeight();
-							collided(gc, object);
-
-						}
-						
-						if(getBoundsLeft().intersects(object.getBounds())) {
-							velX = 0;
-							x = object.getX() + (int) object.getBounds().getWidth();
-							collided(gc, object);
-						}
-						
-						if(getBoundsRight().intersects(object.getBounds())) {
-							velX = 0;
-							x = object.getX() + w;
-							collided(gc, object);
+					if (object.getId() == ID.Box) {
+						if (new Rectangle((int) position.x + 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
 						}
 					}
 				}
-			}
-			
-		}
-		
 
-		WMath.clamb(velX, maxVelX, -maxVelX);
-		WMath.clamb(velY, maxVelY, -maxVelY);
+				if (collided) {
+					
+					forces.add(new Vector(speed.x * bounce * mass, 0));
+					speed.x = 0;
+					continue;
+				} else {
+					position.x++;
+				}
+			}
+		} else if (speed.x < 0) {
+			for (int i = 0; i > (int)speed.x; i--) {
+				for (GameObject object : gc.handler.object) {
+					if (object.getId() == ID.Box) {
+						if (new Rectangle((int) position.x - 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(speed.x * bounce * mass, 0));
+					speed.x = 0;
+					continue;
+				} else {
+					position.x--;
+				}
+			}
+		}
+	}
+	
+	private void collisionY(GameContainer gc) {
+		boolean collided = false;
+
+		if (speed.y >= 1) {
+			for (int i = 0; i < (int)speed.y; i++) {
+				for (GameObject object : gc.handler.object) {
+					if (object.getId() == ID.Box) {
+						if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(0, speed.y * bounce * mass));
+					speed.y = 0;
+					falling = false;
+					continue;
+				} else {
+					position.y++;
+					falling = true;
+				}
+			}
+		} else if (speed.y <= -1) {
+			for (int i = 0; i > (int)speed.y; i--) {
+				for (GameObject object : gc.handler.object) {
+					if (object.getId() == ID.Box) {
+						if (new Rectangle((int) position.x, (int) position.y - 1, (int) w, (int) h).intersects(object.getBounds())) {
+							collided = true;
+							continue;
+						}
+					}
+				}
+
+				if (collided) {
+					forces.add(new Vector(0, speed.y * bounce * mass));
+					speed.y = 0;
+					falling = false;
+					continue;
+				} else {
+					position.y--;
+					falling = true;
+				}
+			}
+		} else if(speed.y > - 1 && speed.y < 1) {
+			for (GameObject object : gc.handler.object) {
+				if (object.getId() == ID.Box) {
+					if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
+						collided = true;
+						continue;
+					}
+				}
+			}
+
+			if (collided) {
+				speed.y = 0;
+				falling = false;
+				return;
+			} else {
+				position.y++;
+				falling = true;
+			}
+		}
 	}
 	
 	public Rectangle getBoundsLeft() {
-		return new Rectangle((int)x, (int)y+offsetHitboxes, (int) (w/2), (int) h - offsetHitboxes*2);
+		return new Rectangle((int)position.x, (int)position.y+offsetHitboxes, (int) (w/2), (int) h - offsetHitboxes*2);
 	}
 
 	public Rectangle getBoundsRight() {
-		return new Rectangle((int)x + (int) (w/2), (int)y+offsetHitboxes, (int) (w/2), (int) h - offsetHitboxes*2);
+		return new Rectangle((int)position.x + (int) (w/2), (int)position.y+offsetHitboxes, (int) (w/2), (int) h - offsetHitboxes*2);
 	}
 
 	public Rectangle getBoundsBottom() {
-		return new Rectangle((int)x + offsetHitboxes, (int)y + (int) (h/2), (int) w - offsetHitboxes*2, (int) (h/2));
+		return new Rectangle((int)position.x + offsetHitboxes, (int)position.y + (int) (h/2), (int) w - offsetHitboxes*2, (int) (h/2));
 	}
 
 	public Rectangle getBoundsTop() {
-		return new Rectangle((int)x + offsetHitboxes, (int)y, (int) w - offsetHitboxes*2, (int) (h/2));
+		return new Rectangle((int)position.x + offsetHitboxes, (int)position.y, (int) w - offsetHitboxes*2, (int) (h/2));
 	}
 
 	public abstract void render(GameContainer gc, Renderer r);
 
 	public Rectangle getBounds() {
-		return new Rectangle((int) x, (int) y, (int) w, (int) h);
+		return new Rectangle((int) position.x, (int) position.y, (int) w, (int) h);
 	}
 
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
+	public Vector getPosition() {
+		return position;
 	}
 
 	public float getW() {
@@ -189,20 +287,8 @@ public abstract class GameObject {
 		this.h = h;
 	}
 
-	public float getVelX() {
-		return velX;
-	}
-
-	public void setVelX(float velX) {
-		this.velX = velX;
-	}
-
-	public float getVelY() {
-		return velY;
-	}
-
-	public void setVelY(float velY) {
-		this.velY = velY;
+	public Vector getSpeed() {
+		return speed;
 	}
 
 	public ID getId() {
@@ -213,60 +299,12 @@ public abstract class GameObject {
 		this.id = id;
 	}
 
-	public boolean hasGravity() {
-		return hasGravity;
-	}
-
-	public void setHasGravity(boolean hasGravity) {
-		this.hasGravity = hasGravity;
-	}
-
-	public boolean hasCollision() {
-		return hasCollision;
-	}
-
-	public void setHasCollision(boolean hasCollision) {
-		this.hasCollision = hasCollision;
-	}
-
-	public boolean isSlippery() {
-		return isSlippery;
-	}
-
-	public void setSlippery(boolean isSlippery) {
-		this.isSlippery = isSlippery;
-	}
-
-	public boolean isBouncy() {
-		return isBouncy;
-	}
-
-	public void setBouncy(boolean isBouncy) {
-		this.isBouncy = isBouncy;
-	}
-
 	public float getGravity() {
 		return gravity;
 	}
 
 	public void setGravity(float gravity) {
 		this.gravity = gravity;
-	}
-
-	public float getMaxVelX() {
-		return maxVelX;
-	}
-
-	public void setMaxVelX(float maxVelX) {
-		this.maxVelX = maxVelX;
-	}
-
-	public float getMaxVelY() {
-		return maxVelY;
-	}
-
-	public void setMaxVelY(float maxVelY) {
-		this.maxVelY = maxVelY;
 	}
 
 	public boolean isFalling() {
@@ -301,19 +339,79 @@ public abstract class GameObject {
 		this.gameObjectCollisionID = gameObjectCollisionID;
 	}
 
-	public boolean isHasGravity() {
-		return hasGravity;
-	}
-
-	public boolean isHasCollision() {
-		return hasCollision;
-	}
-
 	public boolean canMove() {
 		return canMove;
 	}
 
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
+	}
+
+	public float getFriction() {
+		return friction;
+	}
+
+	public void setFriction(float friction) {
+		this.friction = friction;
+	}
+
+	public float getBounce() {
+		return bounce;
+	}
+
+	public void setBounce(float bounce) {
+		this.bounce = bounce;
+	}
+
+	public float getMass() {
+		return mass;
+	}
+
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+
+	public float getAirFrictionY() {
+		return airFrictionY;
+	}
+
+	public void setAirFrictionY(float airFrictionY) {
+		this.airFrictionY = airFrictionY;
+	}
+
+	public float getAirFrictionX() {
+		return airFrictionX;
+	}
+
+	public void setAirFrictionX(float airFrictionX) {
+		this.airFrictionX = airFrictionX;
+	}
+
+	public List<Vector> getForces() {
+		return forces;
+	}
+
+	public void setForces(List<Vector> forces) {
+		this.forces = forces;
+	}
+
+	public ArrayList<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(ArrayList<String> tags) {
+		this.tags = tags;
+	}
+
+	public boolean isCanMove() {
+		return canMove;
+	}
+
+	public void setPosition(Vector position) {
+		this.position = position;
+	}
+
+	public void setSpeed(Vector speed) {
+		this.speed = speed;
 	}
 }

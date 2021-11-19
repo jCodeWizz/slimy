@@ -4,6 +4,7 @@ import dev.CodeWizz.engine.AbstractGame;
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.light.Light;
+import dev.CodeWizz.engine.object.Box;
 
 public class Shooty extends AbstractGame {
 
@@ -36,7 +37,12 @@ public class Shooty extends AbstractGame {
 		
 		player.init(gc);
 		
+		gc.handler.addObject(new Box(0, gc.getHeight()/2, gc.getWidth(), 32, 0xffa17c9c, Light.NONE));
 		gc.handler.addObject(new Box(0, gc.getHeight()-32, gc.getWidth(), 32, 0xffa17c9c, Light.NONE));
+		gc.handler.addObject(new Box(gc.getWidth()/2-8, gc.getHeight()/2, 16, gc.getHeight()/2, 0xffa17c9c, Light.NONE));
+		gc.handler.addObject(new Box(0, gc.getHeight()/2, 16, gc.getHeight()/2, 0xffa17c9c, Light.NONE));
+		
+		gc.handler.addObject(new Ball(400, 400));
 	}
 	
 	public static void main(String[] args) {
