@@ -3,8 +3,6 @@ package dev.CodeWizz.shooty;
 import dev.CodeWizz.engine.AbstractGame;
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
-import dev.CodeWizz.engine.gfx.light.Light;
-import dev.CodeWizz.engine.object.Box;
 
 public class Shooty extends AbstractGame {
 
