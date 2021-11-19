@@ -29,8 +29,11 @@ public class Shooty extends AbstractGame {
 	@Override
 	public void init(GameContainer gc) {
 		
-		gc.handler.addObject(new Ball(400, 400, true));
-		gc.handler.addObject(new Ball(600, 100, false));
+		gc.handler.addObject(new Ball(gc.getWidth()/2-8, gc.getHeight()/2-8, true));
+		gc.handler.addObject(new Ball(gc.getWidth()/2-8, 50, true));
+		//gc.handler.addObject(new Ball(gc.getWidth()/2-8+100, gc.getHeight()/2-8, true));
+		//gc.handler.addObject(new Ball(gc.getWidth()/2-8-100, gc.getHeight()/2-8, true));
+		gc.handler.addObject(new Ball(gc.getWidth()/2-8 - 200, 100, false));
 	}
 	
 	public static void main(String[] args) {

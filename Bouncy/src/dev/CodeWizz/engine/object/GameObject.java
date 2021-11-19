@@ -127,11 +127,11 @@ public abstract class GameObject {
 			collisionX(gc);
 			collisionY(gc);
 		
-			if(speed.x > -0.1f && speed.x < 0.1f)
-				speed.x = 0;
+			//if(speed.x > -0.1f && speed.x < 0.1f)
+			//	speed.x = 0;
 			
-			if(speed.y > -0.1f && speed.y < 0.1f)
-				speed.y = 0;
+			//if(speed.y > -0.1f && speed.y < 0.1f)
+			//	speed.y = 0;
 		}
 	}
 	
