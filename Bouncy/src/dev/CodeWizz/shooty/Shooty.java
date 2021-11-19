@@ -51,41 +51,12 @@ public class Shooty extends AbstractGame {
 	@Override
 	public void init(GameContainer gc) {
 		addPlanet(new Planet(gc.getWidth()/2, gc.getHeight()/2, 30, 10000, 0xffebcc34).setStationary(true));
-		addPlanet(new Planet(100, 100, 5, 50, 0xff12b0ff, new Vector(0, 1f)));
-
+		addPlanet(new Planet(gc.getWidth()/2 + gc.getWidth()/4, gc.getHeight()/2, 5, 50, 0xff12b0ff, new Vector(0, 3f)));
 	}
 	
 	public static void main(String[] args) {
 		GameContainer gc = new GameContainer(new Shooty());
 		GameContainer.showInfo();
-		
-		double force = 2;
-		
-		Vector v = new Vector();
-
-		int dx = -100;
-		int dy = -50;
-		
-		double angle;
-
-		if (dy != 0) {
-			angle = Math.atan(dx / dy);
-			
-			v.x = (float) (Math.toDegrees(Math.sin(angle)) * force);
-			v.y = (float) (Math.toDegrees(Math.cos(angle)) * force);
-			
-			System.out.println("ANGLE: " + Math.toDegrees(angle));
-			System.out.println("X: " + v.x);
-			System.out.println("Y: " + v.y);
-			
-			
-		} 
-		
-		
-		
-		
-		
-		
 		gc.start();
 	}
 	
