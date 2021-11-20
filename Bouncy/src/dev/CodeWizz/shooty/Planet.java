@@ -102,7 +102,7 @@ public class Planet {
 		if(name.equalsIgnoreCase("EARTH")) {
 			r.fillCircle(0xff093b22, (int)position.x-1, (int)position.y-1, 3);
 		}
-		r.setFont(Font.STANDARD);
+		r.setFont(Font.DETAILED);
 		r.drawText(name, (int)position.x, (int)position.y);
 	
 	

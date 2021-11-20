@@ -8,6 +8,7 @@ import dev.CodeWizz.engine.AbstractGame;
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.util.Vector;
+import dev.CodeWizz.engine.util.WDebug;
 
 public class Shooty extends AbstractGame {
 
@@ -19,6 +20,9 @@ public class Shooty extends AbstractGame {
 
 	public Shooty() {
 		inst = this;
+		
+		WDebug.log(1.9f * (float)Math.pow(10, 30));
+	
 	}
 
 	@Override
@@ -67,39 +71,39 @@ public class Shooty extends AbstractGame {
 
 	private void addPlanetO(GameContainer gc) {
 		// SUN
-		addPlanet(new Planet(gc.getWidth() / 2, gc.getHeight() / 2, 40, 100000000, 0xffebcc34, "SUN")
+		addPlanet(new Planet(gc.getWidth() / 2, gc.getHeight() / 2, 80, 100000000, 0xffebcc34, "SUN")
 				.setStationary(true));
 
 		// MERCURY
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 225, gc.getHeight() / 2, 3, 20, 0xffd9c7a5,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 225, gc.getHeight() / 2, 6, 20, 0xffd9c7a5,
 				new Vector(1f, 3f), "MERCURY"));
 
 		// VENUS
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 175, gc.getHeight() / 2, 3, 40, 0xfff58742,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 175, gc.getHeight() / 2, 6, 40, 0xfff58742,
 				new Vector(0, 3f), "VENUS"));
 
 		// EARTH
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 100, gc.getHeight() / 2, 5, 50, 0xff12b0ff,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 100, gc.getHeight() / 2, 10, 50, 0xff12b0ff,
 				new Vector(0, 3f), "EARTH"));
 
 		// MARS
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 50, gc.getHeight() / 2, 3, 40, 0xffa6501b,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 - 50, gc.getHeight() / 2, 6, 40, 0xffa6501b,
 				new Vector(0, 3f), "MARS"));
 
 		// JUPITER
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4, gc.getHeight() / 2, 15, 80, 0xffd99368,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4, gc.getHeight() / 2, 30, 80, 0xffd99368,
 				new Vector(0, 0.5f), "JUPITER"));
 
 		// SATURN
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 75, gc.getHeight() / 2, 15, 80, 0xffdeb871,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 75, gc.getHeight() / 2, 30, 80, 0xffdeb871,
 				new Vector(0, 1f), "SATURN"));
 
 		// URANUS
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 125, gc.getHeight() / 2, 5, 60, 0xff87e0d1,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 125, gc.getHeight() / 2, 10, 60, 0xff87e0d1,
 				new Vector(0, 3f), "URANUS"));
 
 		// NEPTUNE
-		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 175, gc.getHeight() / 2, 5, 60, 0xff3c447a,
+		addPlanet(new Planet(gc.getWidth() / 2 + gc.getWidth() / 4 + 175, gc.getHeight() / 2, 10, 60, 0xff3c447a,
 				new Vector(0, 3f), "NEPTUNE"));
 
 	}
