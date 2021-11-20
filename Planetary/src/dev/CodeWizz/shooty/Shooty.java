@@ -34,6 +34,24 @@ public class Shooty extends AbstractGame {
 			else
 				play = true;
 		}
+		
+		if (gc.getInput().isKeyDown(KeyEvent.VK_R)) {
+			for(Planet p : planets) {
+				if(!p.stationary) {
+					p.reset(gc);
+					p.position = p.getStartPos(gc);
+					p.speed = p.getStartSpeed(gc);
+				}
+			}
+			
+			play = false;
+		}
+		
+		if (gc.getInput().isKeyDown(KeyEvent.VK_ESCAPE)) {
+			for(Planet p : planets) {
+				p.paths.clear();
+			}
+		}
 	}
 
 	@Override
@@ -50,7 +68,8 @@ public class Shooty extends AbstractGame {
 
 	@Override
 	public void init(GameContainer gc) {
-
+		addPlanet(new Sun(gc));
+		addPlanet(new Earth(gc));
 	}
 
 	public static void main(String[] args) {
