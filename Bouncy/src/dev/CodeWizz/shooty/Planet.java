@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
+import dev.CodeWizz.engine.gfx.Font;
 import dev.CodeWizz.engine.util.Vector;
 
 public class Planet {
@@ -16,8 +17,9 @@ public class Planet {
 	public float mass, r;
 	public boolean stationary;
 	public int color;
+	public String name;
 
-	public Planet(float x, float y, float r, float mass, int color) {
+	public Planet(float x, float y, float r, float mass, int color, String name) {
 		position = new Vector(x, y);
 		speed = new Vector();
 		acc = new Vector();
@@ -25,9 +27,10 @@ public class Planet {
 		this.r = r;
 		this.mass = mass;
 		this.color = color;
+		this.name = name;
 	}
 	
-	public Planet(float x, float y, float r, float mass, int color, Vector s) {
+	public Planet(float x, float y, float r, float mass, int color, Vector s, String name) {
 		position = new Vector(x, y);
 		speed = new Vector(s.x, s.y);
 		acc = new Vector();
@@ -35,6 +38,7 @@ public class Planet {
 		this.r = r;
 		this.mass = mass;
 		this.color = color;
+		this.name = name;
 	}
 
 	public void update(GameContainer gc) {
@@ -95,6 +99,13 @@ public class Planet {
 
 	public void render(GameContainer gc, Renderer r) {
 		r.fillCircle(color, position, (int) this.r);
+		if(name.equalsIgnoreCase("EARTH")) {
+			r.fillCircle(0xff093b22, (int)position.x-1, (int)position.y-1, 3);
+		}
+		r.setFont(Font.STANDARD);
+		r.drawText(name, (int)position.x, (int)position.y);
+	
+	
 	}
 
 	public Planet setStationary(boolean s) {
