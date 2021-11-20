@@ -9,7 +9,7 @@ import dev.CodeWizz.engine.util.Vector;
 
 public class Planet {
 
-	private final double c = 6.67408 * Math.pow(10, -7);
+	private final double c = 6.67408 * Math.pow(10, -11);
 
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	public Vector position, speed, acc;
