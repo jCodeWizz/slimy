@@ -24,6 +24,10 @@ public class Vector {
 		this.y += vec.y;
 	}
 	
+	public Vector add2(Vector vec) {
+		return new Vector(this.x + vec.x, this.y + vec.y);
+	}
+	
 	public void multiply(Vector vec) {
 		this.x *= vec.x;
 		this.y *= vec.y;

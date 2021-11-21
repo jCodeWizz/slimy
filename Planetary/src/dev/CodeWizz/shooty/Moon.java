@@ -10,11 +10,11 @@ import dev.CodeWizz.engine.util.WMath;
 
 public class Moon {
 
-	private double c = 6.67408 * Math.pow(10, -4);
+	private double c = 6.67408 * Math.pow(10, -3);
 	public Vector position, speed, acc;
 	public List<Vector> forces = new CopyOnWriteArrayList<>();
 	public String name;
-	public float mass = 5000000;
+	public float mass = 5;
 	public int radius = 3;
 	public boolean stationary = false;
 	private Planet p;
@@ -29,9 +29,7 @@ public class Moon {
 
 	public void update(GameContainer gc) {
 		if (!stationary) {
-
-			float r = WMath.distance(p.position, position);
-			float force = (float) (c * ((p.mass * mass) / (r * r)));
+			float force = (float) (c * ((p.mass * mass) / (radius * radius)));
 			forces.add(Vector.forceToVector(force, position, p.position));
 
 			if (!forces.isEmpty()) {
@@ -41,15 +39,10 @@ public class Moon {
 				forces.clear();
 			}
 			
-			
-
 			acc.devide(mass);
-
-			if(r > 10) {
-				speed.negative();
-			}
 			
-			speed = p.speed.add(acc);
+			speed.add(acc);
+			
 			position.add(speed);
 			acc.clear();
 
@@ -59,6 +52,12 @@ public class Moon {
 
 	public void render(GameContainer gc, Renderer r) {
 		r.fillCircle(0xffffffff, position, radius);
+		
+		
+		r.drawText("Moon: ", 10, 80);
+		r.drawText("Dist: " + WMath.distance(p.position, position), 10, 110);
+		r.drawText("Speed dx: " + (speed.x - p.speed.x), 10, 130);
+		r.drawText("Speed dy: " + (speed.y - p.speed.y), 10, 150);
 	}
 
 	public void reset(GameContainer gc) {
@@ -66,7 +65,7 @@ public class Moon {
 	}
 
 	public Vector getStartPos(GameContainer gc) {
-		return new Vector(p.getStartPos(gc).x - 15, p.getStartPos(gc).y);
+		return new Vector(p.getStartPos(gc).x - 35, p.getStartPos(gc).y);
 	}
 
 	public Vector getStartSpeed(GameContainer gc) {

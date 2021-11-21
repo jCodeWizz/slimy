@@ -34,7 +34,7 @@ public abstract class Planet {
 	public void update(GameContainer gc) {
 		if (!stationary) {
 			for (Planet p : Shooty.inst.planets) {
-				if (!p.equals(this)) {
+				if (!p.equals(this) && p.stationary) {
 					float r = WMath.distance(p.position, position);
 					float force = (float) (c * ((p.mass * mass) / (r * r)));
 					forces.add(Vector.forceToVector(force, position, p.position));
@@ -54,7 +54,7 @@ public abstract class Planet {
 			position.add(speed);
 			acc.clear();
 			
-			if(counter < 2) {
+			if(counter < 30) {
 				counter++;
 			} else {
 				for(Path path : paths) {

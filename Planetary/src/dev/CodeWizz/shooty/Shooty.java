@@ -70,6 +70,7 @@ public class Shooty extends AbstractGame {
 	public void init(GameContainer gc) {
 		addPlanet(new Sun(gc));
 		addPlanet(new Earth(gc));
+		addPlanet(new Venus(gc));
 	}
 
 	public static void main(String[] args) {
