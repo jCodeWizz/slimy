@@ -5,6 +5,7 @@ import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.object.Box;
+import dev.CodeWizz.engine.util.WDebug;
 
 public class Shooty extends AbstractGame {
 
