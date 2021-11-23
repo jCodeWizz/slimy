@@ -33,11 +33,11 @@ public class Venus extends Planet {
 
 	@Override
 	public Vector getStartPos(GameContainer gc) {
-		return new Vector(gc.getWidth()/2 - 180, gc.getHeight()/2 - 200);
+		return new Vector(gc.getWidth()/2 - 160, gc.getHeight()/2 - 200);
 	}
 
 	@Override
 	public Vector getStartSpeed(GameContainer gc) {
-		return new Vector(3f, -1.5f);
+		return new Vector(3f, 0f);
 	}
 }

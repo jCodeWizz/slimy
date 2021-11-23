@@ -27,6 +27,10 @@ public class WMath {
 		return (float) Math.abs(Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 	}
 	
+	public static float distance(Vector a, Vector b) {
+		return (float) Math.abs(Math.sqrt((b.x - a.x)* (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
+	}
+	
 	public static float distance(float a, float b) {
 		return (float) Math.abs(a - b);
 	}

@@ -19,6 +19,8 @@ public class WDebug {
 	
 	public static void refreshDate() {
 		Date d = Calendar.getInstance().getTime();  
+		if(dateFormat == null)
+			setupDate();
 		date = dateFormat.format(d);
 	}
 	

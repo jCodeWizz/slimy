@@ -15,7 +15,7 @@ public class Earth extends Planet {
 		this.mass = 5;
 		this.radius = 10;
 		
-		paths.add(new Path());
+		//paths.add(new Path());
 		moon = new Moon(gc, this);
 	}
 	

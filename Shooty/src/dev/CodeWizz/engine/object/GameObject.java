@@ -143,6 +143,7 @@ public abstract class GameObject {
 					if (gameObjectCollisionID.contains(object.getId()) && !object.equals(this)) {
 						if (new Rectangle((int) position.x + 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
 							collided = true;
+							collided(gc, object);
 							continue;
 						}
 					}
@@ -163,6 +164,7 @@ public abstract class GameObject {
 					if (gameObjectCollisionID.contains(object.getId()) && !object.equals(this)) {
 						if (new Rectangle((int) position.x - 1, (int) position.y, (int) w, (int) h).intersects(object.getBounds())) {
 							collided = true;
+							collided(gc, object);
 							continue;
 						}
 					}
@@ -188,6 +190,7 @@ public abstract class GameObject {
 					if (gameObjectCollisionID.contains(object.getId()) && !object.equals(this)) {
 						if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
 							collided = true;
+							collided(gc, object);
 							continue;
 						}
 					}
@@ -209,6 +212,7 @@ public abstract class GameObject {
 					if (gameObjectCollisionID.contains(object.getId()) && !object.equals(this)) {
 						if (new Rectangle((int) position.x, (int) position.y - 1, (int) w, (int) h).intersects(object.getBounds())) {
 							collided = true;
+							collided(gc, object);
 							continue;
 						}
 					}
@@ -224,11 +228,12 @@ public abstract class GameObject {
 					falling = true;
 				}
 			}
-		} else if(speed.y > - 1 && speed.y < 1) {
+		} else if(speed.y > - 1 && speed.y < 1 && gravity != 0) {
 			for (GameObject object : gc.handler.object) {
 				if (gameObjectCollisionID.contains(object.getId()) && !object.equals(this)) {
 					if (new Rectangle((int) position.x, (int) position.y + 1, (int) w, (int) h).intersects(object.getBounds())) {
 						collided = true;
+						collided(gc, object);
 						continue;
 					}
 				}
