@@ -5,7 +5,6 @@ import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.object.Box;
-import dev.CodeWizz.engine.util.WDebug;
 
 public class Shooty extends AbstractGame {
 
@@ -46,5 +45,9 @@ public class Shooty extends AbstractGame {
 		GameContainer gc = new GameContainer(new Shooty());
 		GameContainer.showInfo();
 		gc.start();
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }

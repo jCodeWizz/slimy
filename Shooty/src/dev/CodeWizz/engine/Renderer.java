@@ -19,7 +19,7 @@ public class Renderer {
 	private int pW, pH;
 
 	public int ambientColor = 0xffffffff;
-	private int dayColor = 0xff000000;
+	private int dayColor = 0xff3b414a;
 
 	private Font font;
 
@@ -94,13 +94,13 @@ public class Renderer {
 	}
 	
 	public void fillCircle(int color, Vector pos, int radius) {
-		pos.x -= camX;
-		pos.y -= camY;
+		int offX = (int)pos.x - camX;
+		int offY = (int)pos.y - camY;
 		
 		for(int y=-radius; y<=radius; y++)
 		    for(int x=-radius; x<=radius; x++)
 		        if(x*x+y*y <= radius*radius)
-		            setPixel((int)pos.x+x, (int)pos.y+y, color);
+		            setPixel((int)offX+x, (int)offY+y, color);
 	}
 
 	public void drawText(String text, float offX, int offY, int size) {

@@ -1,4 +1,4 @@
-package dev.CodeWizz.shooty;
+package dev.CodeWizz.shooty.weapons;
 
 import java.awt.Rectangle;
 
@@ -38,7 +38,7 @@ public class Bullet extends GameObject {
 	
 	@Override
 	public void tick(GameContainer gc) {
-		if(!getBounds().intersects(new Rectangle(0, 0, gc.getWidth(), gc.getHeight()))) {
+		if(!getBounds().intersects(new Rectangle(gc.camera.getX(), gc.camera.getY(), gc.getWidth(), gc.getHeight()))) {
 			gc.handler.removeObject(this);
 		}
 		super.tick(gc);
