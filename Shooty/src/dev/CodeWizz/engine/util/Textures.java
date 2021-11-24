@@ -26,6 +26,8 @@ public class Textures {
 		
 		list.put("gunholder", new Image("/assets/textures/ui/gunholder.png"));
 		list.put("hands", new Image("/assets/textures/guns/icons/hands.png"));
+		list.put("slot", new Image("/assets/textures/ui/slot.png"));
+		list.put("slotselected", new Image("/assets/textures/ui/slotselected.png"));
 		
 		WDebug.log("[System]: Loaded in " + list.size() + " textures!");
 		WDebug.log("[System]: Loaded in " + listT.size() + " texture tiles!");
