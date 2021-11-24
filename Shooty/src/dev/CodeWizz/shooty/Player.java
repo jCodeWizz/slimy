@@ -11,9 +11,9 @@ import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.object.GameObject;
 import dev.CodeWizz.engine.object.ID;
 import dev.CodeWizz.engine.util.State;
-import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
-import dev.CodeWizz.shooty.weapons.Weapon;
+import dev.CodeWizz.shooty.weapons.Slot;
+import dev.CodeWizz.shooty.weapons.types.Hands;
 import dev.CodeWizz.shooty.weapons.types.Pistol;
 
 public class Player {
@@ -23,9 +23,10 @@ public class Player {
 	private float friction = -0.075f, mass = 20, airFrictionY = 0.075f, airFrictionX = 0.075f;
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	private ArrayList<ID> gameObjectCollisionID = new ArrayList<>();
-	private Weapon weapon;
 	
-	
+	private Slot[] slots;
+	private int selectedSlot = 0;
+		
 	
 	public Player() {
 		position = new Vector();
@@ -36,35 +37,61 @@ public class Player {
 
 	public void init(GameContainer gc) {
 		gameObjectCollisionID.add(ID.Box);
-		weapon = new Pistol();
+		slots = new Slot[5];
+		
+		
+		
+		int betweenslots = 10;
+		int totalWidth = (Slot.getW()*slots.length) + (slots.length-1) * betweenslots;
+		
+		for(int i = 0; i < slots.length; i++) {
+			slots[i] = new Slot(gc.getWidth()/2 - totalWidth/2 + i * betweenslots + i * Slot.getW(), 10, new Hands());
+		}
+		
+		slots[0].setWeapon(new Pistol());
 	}
 
 	public void update(GameContainer gc) {
 		if (gc.getGameState() == State.Game) {
 			
-			if(gc.getInput().isButton(1)) {
-				//float angle = (float) Math.atan2(gc.getInput().getMouseY() - position.y,gc.getInput().getMouseX() - position.x);
-				//gc.handler.addObject(new Bullet(position.x, position.y, new Vector((float)Math.cos(angle), (float)Math.sin(angle)), 2));
+			slots[selectedSlot].update(gc);
+			
+			if(gc.getInput().getScroll() > 0) {
+				if(selectedSlot < slots.length-1) {
+					selectedSlot++;
+				} else {
+					selectedSlot = 0;
+				}
+			} else if(gc.getInput().getScroll() < 0) {
+				if(selectedSlot > 0) {
+					selectedSlot--;
+				} else {
+					selectedSlot = slots.length-1;
+				}
 			}
 			
-			weapon.update(gc);
+			
+			for(int i = 0; i < slots.length; i++) {
+				if(i == selectedSlot)
+					slots[i].setSelected(true);
+				else
+					slots[i].setSelected(false);
+			}
+			
 			
 			physics(gc);
-			
-			
 		}
 	}
 
 	public void render(GameContainer gc, Renderer r) {
 		r.fillCircle(0xffffffff, position, (int)dim.x/2);
 		r.drawRect(getBounds(), 0xffff0000);
-		
-		weapon.render(gc, r);
 	}
 
 	public void renderUI(GameContainer gc, Renderer r) {
-		r.drawImageUI(Textures.get("gunholder"), 0, gc.getHeight()-Textures.get("gunholder").getH()*2, 2);
-		r.drawImageUI(weapon.getIcon(), 3, gc.getHeight()-weapon.getIcon().getH()*2-6, 2);
+		for(int i = 0; i < slots.length; i++) {
+			slots[i].render(gc, r);
+		}
 	}
 	
 	private void collisionX(GameContainer gc) {
