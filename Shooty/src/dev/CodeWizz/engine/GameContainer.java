@@ -12,6 +12,7 @@ import dev.CodeWizz.engine.input.Input;
 import dev.CodeWizz.engine.object.Handler;
 import dev.CodeWizz.engine.util.NormalMaps;
 import dev.CodeWizz.engine.util.Sounds;
+import dev.CodeWizz.engine.util.State;
 import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.WDebug;
 
@@ -25,6 +26,8 @@ public class GameContainer implements Runnable {
 	private HudManager hMan;
 	
 	public static GameContainer inst;
+	
+	private State gameState;
 
 	public Camera camera;
 	public Handler handler;
@@ -49,7 +52,7 @@ public class GameContainer implements Runnable {
 		
 		width = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / scale);
 		height = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / scale);
-
+		gameState = State.Game;
 	}
 
 	public void start() {
@@ -230,5 +233,13 @@ public class GameContainer implements Runnable {
 
 	public void sethMan(HudManager hMan) {
 		this.hMan = hMan;
+	}
+
+	public State getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(State gameState) {
+		this.gameState = gameState;
 	}
 }

@@ -12,13 +12,14 @@ import dev.CodeWizz.engine.gfx.ImageRequest;
 import dev.CodeWizz.engine.gfx.ImageTile;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.gfx.light.LightRequest;
+import dev.CodeWizz.engine.util.Vector;
 
 public class Renderer {
 
 	private int pW, pH;
 
 	public int ambientColor = 0xffffffff;
-	private int dayColor = 0xff000000;
+	private int dayColor = 0xff3b414a;
 
 	private Font font;
 
@@ -80,6 +81,26 @@ public class Renderer {
 			p[index] = (newRed << 16 | newGreen << 8 | newBlue);
 		}
 
+	}
+	
+	public void fillCircle(int color, int offX, int offY, int radius) {
+		offX -= camX;
+		offY -= camY;
+		
+		for(int y=-radius; y<=radius; y++)
+		    for(int x=-radius; x<=radius; x++)
+		        if(x*x+y*y <= radius*radius)
+		            setPixel(offX+x, offY+y, color);
+	}
+	
+	public void fillCircle(int color, Vector pos, int radius) {
+		int offX = (int)pos.x - camX;
+		int offY = (int)pos.y - camY;
+		
+		for(int y=-radius; y<=radius; y++)
+		    for(int x=-radius; x<=radius; x++)
+		        if(x*x+y*y <= radius*radius)
+		            setPixel((int)offX+x, (int)offY+y, color);
 	}
 
 	public void drawText(String text, float offX, int offY, int size) {
