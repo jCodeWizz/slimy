@@ -10,6 +10,7 @@ public class Carbine extends Weapon {
 		this.broken = false;
 		this.fullAuto = true;
 		this.burst = false;
+		this.laser = true;
 		
 		this.amountOfBullets = 1;
 		this.refireTime = 30;

@@ -10,6 +10,7 @@ public class CombatPistol extends Weapon {
 		this.broken = false;
 		this.fullAuto = false;
 		this.burst = true;
+		this.laser = true;
 		
 		this.amountOfBullets = 2;
 		this.refireTime = 30;

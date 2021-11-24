@@ -8,13 +8,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
+import dev.CodeWizz.engine.gfx.Font;
+import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.object.GameObject;
 import dev.CodeWizz.engine.object.ID;
 import dev.CodeWizz.engine.util.State;
 import dev.CodeWizz.engine.util.Vector;
 import dev.CodeWizz.shooty.weapons.Slot;
+import dev.CodeWizz.shooty.weapons.types.AK47;
+import dev.CodeWizz.shooty.weapons.types.AR16;
+import dev.CodeWizz.shooty.weapons.types.Carbine;
+import dev.CodeWizz.shooty.weapons.types.CombatPistol;
+import dev.CodeWizz.shooty.weapons.types.Famas;
 import dev.CodeWizz.shooty.weapons.types.Hands;
-import dev.CodeWizz.shooty.weapons.types.Pistol;
 
 public class Player {
 
@@ -48,7 +54,11 @@ public class Player {
 			slots[i] = new Slot(gc.getWidth()/2 - totalWidth/2 + i * betweenslots + i * Slot.getW(), 10, new Hands());
 		}
 		
-		slots[0].setWeapon(new Pistol());
+		slots[0].setWeapon(new AK47());
+		slots[1].setWeapon(new AR16());
+		slots[2].setWeapon(new Carbine());
+		slots[3].setWeapon(new CombatPistol());
+		slots[4].setWeapon(new Famas());
 	}
 
 	public void update(GameContainer gc) {
@@ -92,6 +102,10 @@ public class Player {
 		for(int i = 0; i < slots.length; i++) {
 			slots[i].render(gc, r);
 		}
+		
+		r.fillRectUI(10, 10, 2, 50, 0xffffffff, Light.NONE);
+		r.setFont(Font.STANDARD);
+		r.drawText("AMMO: " + slots[selectedSlot].getWeapon().getAmmo(), 14, 10, 2, 0xffffffff);
 	}
 	
 	private void collisionX(GameContainer gc) {

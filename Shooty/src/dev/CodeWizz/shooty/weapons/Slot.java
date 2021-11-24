@@ -2,6 +2,7 @@ package dev.CodeWizz.shooty.weapons;
 
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
+import dev.CodeWizz.engine.gfx.Font;
 import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.shooty.weapons.types.Hands;
 
@@ -31,6 +32,8 @@ public class Slot {
 	public void render(GameContainer gc, Renderer r) {
 		if(selected) {
 			r.drawImageUI(Textures.get("slotselected"), x-1, y-1, 2);
+			r.setFont(Font.STANDARD);
+			r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xffffffff);
 		} else {
 			r.drawImageUI(Textures.get("slot"), x, y, 2);
 		}

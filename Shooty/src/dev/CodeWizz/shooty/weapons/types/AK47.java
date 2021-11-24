@@ -12,13 +12,13 @@ public class AK47 extends Weapon {
 		this.burst = false;
 		
 		this.amountOfBullets = 1;
-		this.refireTime = 30;
+		this.refireTime = 10;
 		this.reloadTime = 120;
 		this.maxAmmo = 30;
 		this.burstDelay = 0;
 		this.spread = 0;
 		
-		
+		this.name = "AK 47";
 	}
 	
 	@Override

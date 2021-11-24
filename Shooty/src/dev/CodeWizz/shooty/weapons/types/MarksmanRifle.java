@@ -10,6 +10,7 @@ public class MarksmanRifle extends Weapon {
 		this.broken = false;
 		this.fullAuto = false;
 		this.burst = false;
+		this.laser = true;
 		
 		this.amountOfBullets = 1;
 		this.refireTime = 0;

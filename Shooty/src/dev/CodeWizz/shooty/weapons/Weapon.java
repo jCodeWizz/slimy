@@ -10,7 +10,8 @@ public abstract class Weapon {
 
 	protected int ammo, counter, spread, amountOfBullets, bulletsToFire, counter2, burstDelay, refireTime, reloadTime, reloadCounter, maxAmmo;
 	protected float damage;	
-	protected boolean broken, fullAuto, burst, fireBullets, reloading, canFire;
+	protected boolean broken, fullAuto, burst, fireBullets, reloading, canFire, laser;
+	protected String name = "";
 	
 	public Weapon() {
 		
