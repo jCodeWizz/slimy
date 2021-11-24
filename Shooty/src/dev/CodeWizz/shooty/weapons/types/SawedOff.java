@@ -12,8 +12,8 @@ public class SawedOff extends Weapon {
 		this.burst = false;
 		
 		this.amountOfBullets = 1;
-		this.refireTime = 30;
-		this.reloadTime = 120;
+		this.refireTime = 0;
+		this.reloadTime = 30;
 		this.maxAmmo = 1;
 		this.burstDelay = 0;
 		this.spread = 0;

@@ -13,7 +13,7 @@ public class Remington extends Weapon {
 		
 		this.amountOfBullets = 5;
 		this.refireTime = 30;
-		this.reloadTime = 120;
+		this.reloadTime = 240;
 		this.maxAmmo = 6;
 		this.burstDelay = 0;
 		this.spread = 0;

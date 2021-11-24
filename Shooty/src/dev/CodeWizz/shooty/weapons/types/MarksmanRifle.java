@@ -12,7 +12,7 @@ public class MarksmanRifle extends Weapon {
 		this.burst = false;
 		
 		this.amountOfBullets = 1;
-		this.refireTime = 30;
+		this.refireTime = 0;
 		this.reloadTime = 120;
 		this.maxAmmo = 15;
 		this.burstDelay = 0;

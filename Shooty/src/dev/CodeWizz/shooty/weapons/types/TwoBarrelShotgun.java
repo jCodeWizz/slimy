@@ -12,8 +12,8 @@ public class TwoBarrelShotgun extends Weapon {
 		this.burst = false;
 		
 		this.amountOfBullets = 12;
-		this.refireTime = 30;
-		this.reloadTime = 120;
+		this.refireTime = 60;
+		this.reloadTime = 180;
 		this.maxAmmo = 2;
 		this.burstDelay = 0;
 		this.spread = 0;
