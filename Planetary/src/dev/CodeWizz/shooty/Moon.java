@@ -12,12 +12,14 @@ public class Moon {
 
 	private double c = 6.67408 * Math.pow(10, -3);
 	public Vector position, speed, acc;
+	public List<Path> paths = new CopyOnWriteArrayList<>();
 	public List<Vector> forces = new CopyOnWriteArrayList<>();
 	public String name;
 	public float mass = 5;
 	public int radius = 3;
 	public boolean stationary = false;
 	private Planet p;
+	private int counter = 0;
 
 	public Moon(GameContainer gc, Planet p) {
 		this.p = p;
@@ -25,6 +27,8 @@ public class Moon {
 		speed = getStartSpeed(gc);
 		acc = new Vector();
 
+		paths.add(new Path());
+		
 	}
 
 	public void update(GameContainer gc) {
@@ -45,6 +49,16 @@ public class Moon {
 			
 			position.add(speed);
 			acc.clear();
+			
+			if(counter < 10) {
+				counter++;
+			} else {
+				for(Path path : paths) {
+					if(path.selected)
+						path.addPoint(new Vector(position.x, position.y));
+				}
+				counter = 0;
+			}
 
 			
 		}
@@ -54,6 +68,10 @@ public class Moon {
 		r.fillCircle(0xffffffff, position, radius);
 		
 		
+		for(Path path : paths) {
+			path.render(gc, r);
+		}
+		
 		r.drawText("Moon: ", 10, 80);
 		r.drawText("Dist: " + WMath.distance(p.position, position), 10, 110);
 		r.drawText("Speed dx: " + (speed.x - p.speed.x), 10, 130);
@@ -61,7 +79,15 @@ public class Moon {
 	}
 
 	public void reset(GameContainer gc) {
-
+		position = getStartPos(gc);
+		speed = getStartSpeed(gc);
+	
+		for(Path path : paths) {
+			path.selected = false;
+		}
+		
+		
+		paths.add(new Path());
 	}
 
 	public Vector getStartPos(GameContainer gc) {

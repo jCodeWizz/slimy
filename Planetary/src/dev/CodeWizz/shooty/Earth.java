@@ -61,5 +61,7 @@ public class Earth extends Planet {
 			path.selected = false;
 		}
 		paths.add(new Path());
+		moon.reset(gc);
+	
 	}
 }

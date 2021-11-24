@@ -54,7 +54,7 @@ public abstract class Planet {
 			position.add(speed);
 			acc.clear();
 			
-			if(counter < 30) {
+			if(counter < 10) {
 				counter++;
 			} else {
 				for(Path path : paths) {
