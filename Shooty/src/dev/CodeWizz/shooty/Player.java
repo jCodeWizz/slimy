@@ -14,7 +14,7 @@ import dev.CodeWizz.engine.util.State;
 import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
 import dev.CodeWizz.shooty.weapons.Weapon;
-import dev.CodeWizz.shooty.weapons.types.Hands;
+import dev.CodeWizz.shooty.weapons.types.Pistol;
 
 public class Player {
 
@@ -36,7 +36,7 @@ public class Player {
 
 	public void init(GameContainer gc) {
 		gameObjectCollisionID.add(ID.Box);
-		weapon = new Hands();
+		weapon = new Pistol();
 	}
 
 	public void update(GameContainer gc) {
