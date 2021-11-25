@@ -2,6 +2,8 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Rarity;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class Minigun extends Weapon {
@@ -17,6 +19,11 @@ public class Minigun extends Weapon {
 		this.maxAmmo = 500;
 		this.burstDelay = 0;
 		this.spread = 0;
+		
+		this.name = "MINI GUN";
+		this.ammoType = Ammo.AR;
+		
+		this.rarity = Rarity.Epic;
 	}
 	
 	@Override

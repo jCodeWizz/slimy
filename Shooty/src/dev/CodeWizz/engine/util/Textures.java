@@ -23,11 +23,13 @@ public class Textures {
 		listT.put("USSR", new ImageTile("/assets/textures/guns/icons/USSR.png", 33, 17));
 		listT.put("G", new ImageTile("/assets/textures/guns/icons/G.png", 33, 17));
 		listT.put("UK", new ImageTile("/assets/textures/guns/icons/UK.png", 33, 17));
+		listT.put("icons", new ImageTile("/assets/textures/ui/icons.png", 24, 24));
 		
 		list.put("gunholder", new Image("/assets/textures/ui/gunholder.png"));
 		list.put("hands", new Image("/assets/textures/guns/icons/hands.png"));
 		list.put("slot", new Image("/assets/textures/ui/slot.png"));
 		list.put("slotselected", new Image("/assets/textures/ui/slotselected.png"));
+		list.put("info", new Image("/assets/textures/ui/info.png"));
 		
 		WDebug.log("[System]: Loaded in " + list.size() + " textures!");
 		WDebug.log("[System]: Loaded in " + listT.size() + " texture tiles!");

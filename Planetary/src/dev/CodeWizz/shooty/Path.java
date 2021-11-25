@@ -23,6 +23,10 @@ public class Path {
 					if(points.indexOf(v) < points.size() - 1) {
 						r.drawLine(0xffff0000, (int)v.x, (int)v.y, (int)points.get(points.indexOf(v)+1).x, (int)points.get(points.indexOf(v)+1).y);
 					}
+					
+					if(points.size() > 1000) {
+						points.remove(0);
+					}
 				}
 			}
 		} else {

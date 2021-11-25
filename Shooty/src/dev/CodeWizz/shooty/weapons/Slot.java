@@ -33,7 +33,15 @@ public class Slot {
 		if(selected) {
 			r.drawImageUI(Textures.get("slotselected"), x-1, y-1, 2);
 			r.setFont(Font.STANDARD);
-			r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xffffffff);
+			if(weapon.rarity == Rarity.Common) {
+				r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xffffffff);
+			} else if(weapon.rarity == Rarity.Uncommon) {
+				r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xff8bfa50);
+			} else if(weapon.rarity == Rarity.Rare) {
+				r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xffd49619);
+			} else if(weapon.rarity == Rarity.Epic) {
+				r.drawText(weapon.name, x + getW() / 2 - r.getFont().getWidth(weapon.name), y + getH() + 4, 2, 0xff795cbd);
+			}
 		} else {
 			r.drawImageUI(Textures.get("slot"), x, y, 2);
 		}

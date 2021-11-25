@@ -13,14 +13,18 @@ import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.object.GameObject;
 import dev.CodeWizz.engine.object.ID;
 import dev.CodeWizz.engine.util.State;
+import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
+import dev.CodeWizz.engine.util.WMath;
+import dev.CodeWizz.shooty.weapons.Ammo;
 import dev.CodeWizz.shooty.weapons.Slot;
+import dev.CodeWizz.shooty.weapons.Weapon;
 import dev.CodeWizz.shooty.weapons.types.AK47;
-import dev.CodeWizz.shooty.weapons.types.AR16;
-import dev.CodeWizz.shooty.weapons.types.Carbine;
 import dev.CodeWizz.shooty.weapons.types.CombatPistol;
-import dev.CodeWizz.shooty.weapons.types.Famas;
 import dev.CodeWizz.shooty.weapons.types.Hands;
+import dev.CodeWizz.shooty.weapons.types.HeavySniper;
+import dev.CodeWizz.shooty.weapons.types.MarksmanRifle;
+import dev.CodeWizz.shooty.weapons.types.Remington;
 
 public class Player {
 
@@ -55,10 +59,10 @@ public class Player {
 		}
 		
 		slots[0].setWeapon(new AK47());
-		slots[1].setWeapon(new AR16());
-		slots[2].setWeapon(new Carbine());
+		slots[1].setWeapon(new Remington());
+		slots[2].setWeapon(new MarksmanRifle());
 		slots[3].setWeapon(new CombatPistol());
-		slots[4].setWeapon(new Famas());
+		slots[4].setWeapon(new HeavySniper());
 	}
 
 	public void update(GameContainer gc) {
@@ -80,6 +84,12 @@ public class Player {
 				}
 			}
 			
+			if(gc.getInput().isKeyDown(KeyEvent.VK_R)) {
+				if(!slots[selectedSlot].getWeapon().isReloading()) {
+					slots[selectedSlot].getWeapon().startReload();
+				}
+			}
+			
 			
 			for(int i = 0; i < slots.length; i++) {
 				if(i == selectedSlot)
@@ -94,8 +104,13 @@ public class Player {
 	}
 
 	public void render(GameContainer gc, Renderer r) {
+		if(slots[selectedSlot].getWeapon().isLaser()) {
+			r.drawObstructedLine(0xffff0000, (int)position.x, (int)position.y, gc.getInput().getMouseX(), gc.getInput().getMouseY());
+		}
+		
+		
 		r.fillCircle(0xffffffff, position, (int)dim.x/2);
-		r.drawRect(getBounds(), 0xffff0000);
+		//r.drawRect(getBounds(), 0xffff0000);
 	}
 
 	public void renderUI(GameContainer gc, Renderer r) {
@@ -103,9 +118,57 @@ public class Player {
 			slots[i].render(gc, r);
 		}
 		
-		r.fillRectUI(10, 10, 2, 50, 0xffffffff, Light.NONE);
 		r.setFont(Font.STANDARD);
-		r.drawText("AMMO: " + slots[selectedSlot].getWeapon().getAmmo(), 14, 10, 2, 0xffffffff);
+		
+		r.drawImageUI(Textures.get("info"), 10, 10, 2);
+		
+		if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.PI) {
+			r.drawImageUI(Textures.get("icons", 0, 1), 15, 20);
+			r.drawImageUI(Textures.get("icons", 1, 1), 10, 35);
+			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
+			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
+			
+			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			
+		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.SG) {
+			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
+			r.drawImageUI(Textures.get("icons", 1, 1), 15, 35);
+			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
+			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
+			
+			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			
+		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.AR) {
+			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
+			r.drawImageUI(Textures.get("icons", 1, 1), 10, 35);
+			r.drawImageUI(Textures.get("icons", 2, 1), 15, 50);
+			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
+			
+			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
+			
+		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.SN) {
+			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
+			r.drawImageUI(Textures.get("icons", 1, 1), 10, 35);
+			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
+			r.drawImageUI(Textures.get("icons", 3, 1), 15, 65);
+			
+			r.drawText(Weapon.ammoSN + "", 35, 67, 2, 0xffffffff);
+			
+		}
+		
+		if(slots[selectedSlot].getWeapon().getAmmo() == 0) {
+			if(slots[selectedSlot].getWeapon().isReloading()) {
+				r.drawText("RELOADING", 20, 14, 1, 0xff00ff00);
+			} else {
+				r.drawText("RELOAD!", 20, 14, 1, 0xffff0000);
+			}
+		}
+		
+		
+		
+		
+		
+		r.fillRectUI(14, 14, (int) WMath.remap(slots[selectedSlot].getWeapon().getAmmo(), 0, slots[selectedSlot].getWeapon().getMaxAmmo(), 0, 50), 5, 0xffffffff, Light.NONE);
 	}
 	
 	private void collisionX(GameContainer gc) {

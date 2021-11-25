@@ -2,6 +2,8 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Rarity;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class MarksmanRifle extends Weapon {
@@ -19,7 +21,12 @@ public class MarksmanRifle extends Weapon {
 		this.burstDelay = 0;
 		this.spread = 0;
 		
+		this.damage = 2;
 		
+		this.name = "SEMI-AUTO";
+		this.ammoType = Ammo.SN;
+		
+		this.rarity = Rarity.Epic;
 	}
 	
 	@Override

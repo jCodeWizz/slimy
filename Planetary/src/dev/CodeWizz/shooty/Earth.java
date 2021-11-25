@@ -15,7 +15,7 @@ public class Earth extends Planet {
 		this.mass = 5;
 		this.radius = 10;
 		
-		//paths.add(new Path());
+		paths.add(new Path());
 		moon = new Moon(gc, this);
 	}
 	
@@ -47,12 +47,12 @@ public class Earth extends Planet {
 
 	@Override
 	public Vector getStartPos(GameContainer gc) {
-		return new Vector(gc.getWidth()/2 - 400, gc.getHeight()/2 - 265);
+		return new Vector(gc.getWidth()/2 + 400, gc.getHeight()/2 - 265);
 	}
 
 	@Override
 	public Vector getStartSpeed(GameContainer gc) {
-		return new Vector(1.5f, -1.5f);
+		return new Vector(1.5f, 1.5f);
 	}
 
 	@Override

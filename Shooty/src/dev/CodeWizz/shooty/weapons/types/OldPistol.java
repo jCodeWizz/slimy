@@ -2,6 +2,7 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class OldPistol extends Weapon {
@@ -18,7 +19,8 @@ public class OldPistol extends Weapon {
 		this.burstDelay = 0;
 		this.spread = 0;
 		
-		
+		this.name = "WWII PISTOL";
+		this.ammoType = Ammo.PI;
 	}
 	
 	@Override

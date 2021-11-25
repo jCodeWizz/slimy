@@ -47,7 +47,7 @@ public abstract class GameObject {
 		if(health - damage > 0) {
 			health-=damage;
 			hurt = true;
-			hurtTime = 30;
+			hurtTime = 5;
 		} else
 			die(gc);
 	}

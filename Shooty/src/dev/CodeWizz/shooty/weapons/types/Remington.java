@@ -2,6 +2,8 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Rarity;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class Remington extends Weapon {
@@ -16,9 +18,12 @@ public class Remington extends Weapon {
 		this.reloadTime = 240;
 		this.maxAmmo = 6;
 		this.burstDelay = 0;
-		this.spread = 0;
+		this.spread = 30;
 		
+		this.name = "REMINGTON";
+		this.ammoType = Ammo.SG;
 		
+		this.rarity = Rarity.Rare;
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class Famas extends Weapon {
@@ -18,7 +19,10 @@ public class Famas extends Weapon {
 		this.burstDelay = 0;
 		this.spread = 0;
 		
+		this.damage = 1;
 		
+		this.name = "FAMAS";
+		this.ammoType = Ammo.AR;
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Rarity;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class GrenadeLauncher extends Weapon {
@@ -18,7 +19,9 @@ public class GrenadeLauncher extends Weapon {
 		this.burstDelay = 0;
 		this.spread = 0;
 		
+		this.name = "GRENADE LAUNCHER";
 		
+		this.rarity = Rarity.Uncommon;
 	}
 	
 	@Override

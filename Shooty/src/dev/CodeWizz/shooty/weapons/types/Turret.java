@@ -18,7 +18,7 @@ public class Turret extends Weapon {
 		this.burstDelay = 0;
 		this.spread = 0;
 		
-		
+		this.name = "TURRET";
 	}
 	
 	@Override

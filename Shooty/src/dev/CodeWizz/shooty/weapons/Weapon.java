@@ -1,5 +1,7 @@
 package dev.CodeWizz.shooty.weapons;
 
+import java.util.Random;
+
 import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.Image;
@@ -9,9 +11,18 @@ import dev.CodeWizz.shooty.Shooty;
 public abstract class Weapon {
 
 	protected int ammo, counter, spread, amountOfBullets, bulletsToFire, counter2, burstDelay, refireTime, reloadTime, reloadCounter, maxAmmo;
-	protected float damage;	
+	protected float damage, c = 0.01f;	
 	protected boolean broken, fullAuto, burst, fireBullets, reloading, canFire, laser;
 	protected String name = "";
+	protected Ammo ammoType;
+	protected Rarity rarity = Rarity.Common;
+	
+	public static int ammoPI = 1000;
+	public static int ammoSG = 1000;
+	public static int ammoAR = 1000;
+	public static int ammoSN = 1000;
+	
+	private static Random r = new Random();
 	
 	public Weapon() {
 		
@@ -26,9 +37,11 @@ public abstract class Weapon {
 					counter2 = 0;
 					if(bulletsToFire == 0) {
 						fireBullets = false;
+						Shooty.inst.getPlayer().getForces().add(Vector.forceToVector(-c*20, Shooty.inst.getPlayer().getPosition(), new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY())));
 						fireBullet(gc, new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
 					} else {
 						bulletsToFire--;
+						Shooty.inst.getPlayer().getForces().add(Vector.forceToVector(-c*20, Shooty.inst.getPlayer().getPosition(), new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY())));
 						fireBullet(gc, new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
 					}
 				}
@@ -40,7 +53,7 @@ public abstract class Weapon {
 					reloadCounter++;
 				} else {
 					reloadCounter = 0;
-					ammo = maxAmmo;
+					reload();
 					reloading = false;
 				}
 			}
@@ -67,6 +80,38 @@ public abstract class Weapon {
 		
 	}
 	
+	public void reload() {
+		if(ammoType == Ammo.PI) {
+			if(ammoPI > maxAmmo - ammo) {
+				ammoPI -= (maxAmmo - ammo);
+				ammo = maxAmmo;
+			} else {
+				ammo = ammoPI;
+			}
+		} else if(ammoType == Ammo.SG) {
+			if(ammoSG > maxAmmo - ammo) {
+				ammoSG -= (maxAmmo - ammo);
+				ammo = maxAmmo;
+			} else {
+				ammo = ammoSG;
+			}
+		} else if(ammoType == Ammo.AR) {
+			if(ammoAR > maxAmmo - ammo) {
+				ammoAR -= (maxAmmo - ammo);
+				ammo = maxAmmo;
+			} else {
+				ammo = ammoAR;
+			}
+		} else if(ammoType == Ammo.SN) {
+			if(ammoSN > maxAmmo - ammo) {
+				ammoSN -= (maxAmmo - ammo);
+				ammo = maxAmmo;
+			} else {
+				ammo = ammoSN;
+			}
+		}
+	}
+	
 	public boolean fire(GameContainer gc) {
 		if(!broken) {
 			if(ammo > 0 && !reloading) {
@@ -80,17 +125,19 @@ public abstract class Weapon {
 						bulletsToFire = amountOfBullets - 1;
 						
 					} else {
+						Shooty.inst.getPlayer().getForces().add(Vector.forceToVector(-c*20, Shooty.inst.getPlayer().getPosition(), new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY())));
 						for(int i = 0; i < amountOfBullets; i++) {
 							fireBullet(gc, new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
 						}
 					}
 				} else {
+					Shooty.inst.getPlayer().getForces().add(Vector.forceToVector(-c*20, Shooty.inst.getPlayer().getPosition(), new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY())));
 					fireBullet(gc, new Vector(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
 				}
 
 				return true;
 			} else if (!reloading){
-				reload();
+				startReload();
 				return false;
 			}
 		}
@@ -98,29 +145,25 @@ public abstract class Weapon {
 		return false;
 	}
 	
+	public void startReload() {
+		reloading = true;
+		reloadCounter = 0;
+	}
+	
 	
 	private void fireBullet(GameContainer gc, Vector pos) {
+		if(spread != 0) {
+			pos.x += r.nextInt(spread + spread) - spread;
+			pos.y += r.nextInt(spread + spread) - spread;
+		}
+		
 		float angle = (float) Math.atan2(pos.y - Shooty.inst.getPlayer().getPosition().y,pos.x - Shooty.inst.getPlayer().getPosition().x);
-		gc.handler.addObject(new Bullet(Shooty.inst.getPlayer().getPosition().x, Shooty.inst.getPlayer().getPosition().y, new Vector((float)Math.cos(angle), (float)Math.sin(angle)), 2));
+		gc.handler.addObject(new Bullet(Shooty.inst.getPlayer().getPosition().x, Shooty.inst.getPlayer().getPosition().y, new Vector((float)Math.cos(angle), (float)Math.sin(angle)), 2, damage));
 	}
 	
 	public abstract Image getIcon();
 	
 	
-	public boolean reload() {
-		// find bullets;
-		
-		
-		// take bullets;
-		
-		
-		// add bullets;
-		reloading = true;
-		reloadCounter = 0;
-		
-		return false;
-	}
-
 	public int getAmmo() {
 		return ammo;
 	}
@@ -223,5 +266,29 @@ public abstract class Weapon {
 
 	public void setCanFire(boolean canFire) {
 		this.canFire = canFire;
+	}
+
+	public boolean isLaser() {
+		return laser;
+	}
+
+	public void setLaser(boolean laser) {
+		this.laser = laser;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Ammo getAmmoType() {
+		return ammoType;
+	}
+
+	public void setAmmoType(Ammo ammoType) {
+		this.ammoType = ammoType;
 	}
 }

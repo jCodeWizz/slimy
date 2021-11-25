@@ -2,6 +2,8 @@ package dev.CodeWizz.shooty.weapons.types;
 
 import dev.CodeWizz.engine.gfx.Image;
 import dev.CodeWizz.engine.util.Textures;
+import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Rarity;
 import dev.CodeWizz.shooty.weapons.Weapon;
 
 public class HeavySniper extends Weapon {
@@ -17,8 +19,12 @@ public class HeavySniper extends Weapon {
 		this.maxAmmo = 5;
 		this.burstDelay = 0;
 		this.spread = 0;
+		this.damage = 25f;
 		
+		this.name = "HEAVY SNIPER";
+		this.ammoType = Ammo.SN;
 		
+		this.rarity = Rarity.Rare;
 	}
 	
 	@Override

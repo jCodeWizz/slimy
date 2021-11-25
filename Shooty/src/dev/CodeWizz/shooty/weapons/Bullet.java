@@ -13,11 +13,14 @@ import dev.CodeWizz.engine.util.Vector;
 public class Bullet extends GameObject {
 
 	private final int particleCount = 8;
+	private float damage;
 	
-	public Bullet(float x, float y, Vector v, float speed) {
+	public Bullet(float x, float y, Vector v, float speed, float damage) {
 		super(x, y);
 
 		this.gameObjectCollisionID.add(ID.Box);
+		this.gameObjectCollisionID.add(ID.Zombie);
+		this.damage = damage;
 		
 		v.multiply(speed);
 		v.multiply(mass);
@@ -53,7 +56,12 @@ public class Bullet extends GameObject {
 			for(int i = 0; i < particleCount; i++) {
 				Particle.add(new Particle(position.x + 2, position.y + 2, 0xffffff00, 1, 60, 2));
 			}
+		} else if(object.getId() == ID.Zombie) {
+			object.damage(gc, damage);
+			gc.handler.removeObject(this);
 		}
+		
+		
 	}
 
 	@Override
