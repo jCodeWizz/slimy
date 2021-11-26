@@ -24,6 +24,8 @@ public class SawedOff extends Weapon {
 		this.ammoType = Ammo.SG;
 		
 		this.rarity = Rarity.Uncommon;
+		
+		this.id = 13;
 	}
 	
 	@Override

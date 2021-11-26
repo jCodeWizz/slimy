@@ -30,6 +30,7 @@ public class Textures {
 		list.put("slot", new Image("/assets/textures/ui/slot.png"));
 		list.put("slotselected", new Image("/assets/textures/ui/slotselected.png"));
 		list.put("info", new Image("/assets/textures/ui/info.png"));
+		list.put("crate", new Image("/assets/textures/crate.png"));
 		
 		WDebug.log("[System]: Loaded in " + list.size() + " textures!");
 		WDebug.log("[System]: Loaded in " + listT.size() + " texture tiles!");

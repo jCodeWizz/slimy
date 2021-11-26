@@ -14,16 +14,20 @@ public class Minigun extends Weapon {
 		this.burst = false;
 		
 		this.amountOfBullets = 1;
-		this.refireTime = 30;
-		this.reloadTime = 120;
+		this.refireTime = 1;
+		this.reloadTime = 360;
 		this.maxAmmo = 500;
 		this.burstDelay = 0;
 		this.spread = 0;
+		
+		this.damage = 1;
 		
 		this.name = "MINI GUN";
 		this.ammoType = Ammo.AR;
 		
 		this.rarity = Rarity.Epic;
+		
+		this.id = 9;
 	}
 	
 	@Override

@@ -26,6 +26,8 @@ public class AR16 extends Weapon {
 		this.damage = 1.5f;
 		
 		this.rarity = Rarity.Uncommon;
+		
+		this.id = 1;
 	}
 	
 	@Override

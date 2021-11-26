@@ -8,6 +8,7 @@ public enum ID {
 	FallingTile(),
 	Bullet(),
 	Rock(),
+	Crate(),
 	Zombie(),
 	Cow();
 }

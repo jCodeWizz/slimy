@@ -23,6 +23,8 @@ public class Famas extends Weapon {
 		
 		this.name = "FAMAS";
 		this.ammoType = Ammo.AR;
+		
+		this.id = 5;
 	}
 	
 	@Override

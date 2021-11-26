@@ -17,6 +17,10 @@ public class Hands extends Weapon {
 		this.maxAmmo = 0;
 		this.burstDelay = 0;
 		this.spread = 0;
+		
+		this.name = "Hands";
+		
+		this.id = 0;
 	}
 	
 	

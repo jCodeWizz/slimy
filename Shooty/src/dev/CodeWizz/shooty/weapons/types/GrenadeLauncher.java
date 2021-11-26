@@ -22,6 +22,8 @@ public class GrenadeLauncher extends Weapon {
 		this.name = "GRENADE LAUNCHER";
 		
 		this.rarity = Rarity.Uncommon;
+		
+		this.id = 6;
 	}
 	
 	@Override

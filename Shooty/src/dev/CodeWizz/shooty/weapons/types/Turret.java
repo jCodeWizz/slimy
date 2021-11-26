@@ -19,6 +19,8 @@ public class Turret extends Weapon {
 		this.spread = 0;
 		
 		this.name = "TURRET";
+		
+		this.id = 14;
 	}
 	
 	@Override

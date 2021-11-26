@@ -27,6 +27,8 @@ public class MarksmanRifle extends Weapon {
 		this.ammoType = Ammo.SN;
 		
 		this.rarity = Rarity.Epic;
+		
+		this.id = 8;
 	}
 	
 	@Override

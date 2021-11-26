@@ -21,6 +21,8 @@ public class OldPistol extends Weapon {
 		
 		this.name = "WWII PISTOL";
 		this.ammoType = Ammo.PI;
+		
+		this.id = 10;
 	}
 	
 	@Override

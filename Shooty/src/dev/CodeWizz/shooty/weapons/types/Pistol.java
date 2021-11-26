@@ -21,6 +21,8 @@ public class Pistol extends Weapon {
 		
 		this.name = "PISTOL";	
 		this.ammoType = Ammo.PI;
+
+		this.id = 11;
 	}
 	
 	@Override

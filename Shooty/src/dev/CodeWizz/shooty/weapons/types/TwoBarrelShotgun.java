@@ -21,6 +21,8 @@ public class TwoBarrelShotgun extends Weapon {
 		
 		this.name = "TWO BARREL SHOTGUN";
 		this.ammoType = Ammo.SG;
+		
+		this.id = 16;
 	}
 	
 	@Override

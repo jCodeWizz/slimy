@@ -27,6 +27,8 @@ public class Carbine extends Weapon {
 		this.ammoType = Ammo.AR;
 		
 		this.rarity = Rarity.Epic;
+		
+		this.id = 3;
 	}
 	
 	@Override

@@ -11,21 +11,26 @@ import dev.CodeWizz.shooty.Shooty;
 public abstract class Weapon {
 
 	protected int ammo, counter, spread, amountOfBullets, bulletsToFire, counter2, burstDelay, refireTime, reloadTime, reloadCounter, maxAmmo;
-	protected float damage, c = 0.01f;	
+	protected float damage = 1, c = 0.01f;	
 	protected boolean broken, fullAuto, burst, fireBullets, reloading, canFire, laser;
 	protected String name = "";
 	protected Ammo ammoType;
 	protected Rarity rarity = Rarity.Common;
 	
-	public static int ammoPI = 1000;
-	public static int ammoSG = 1000;
-	public static int ammoAR = 1000;
-	public static int ammoSN = 1000;
+	public static int ammoPI = 0;
+	public static int ammoSG = 0;
+	public static int ammoAR = 0;
+	public static int ammoSN = 0;
+	
+	protected int id;
 	
 	private static Random r = new Random();
 	
 	public Weapon() {
-		
+	}
+	
+	public Weapon(int ammo) {
+		this.ammo = ammo;
 	}
 	
 	public void update(GameContainer gc) {
@@ -290,5 +295,13 @@ public abstract class Weapon {
 
 	public void setAmmoType(Ammo ammoType) {
 		this.ammoType = ammoType;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

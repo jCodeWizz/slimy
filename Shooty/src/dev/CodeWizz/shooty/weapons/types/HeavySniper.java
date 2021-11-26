@@ -25,6 +25,8 @@ public class HeavySniper extends Weapon {
 		this.ammoType = Ammo.SN;
 		
 		this.rarity = Rarity.Rare;
+		
+		this.id = 7;
 	}
 	
 	@Override

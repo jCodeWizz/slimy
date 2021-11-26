@@ -17,14 +17,10 @@ import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
 import dev.CodeWizz.engine.util.WMath;
 import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Pickup;
 import dev.CodeWizz.shooty.weapons.Slot;
 import dev.CodeWizz.shooty.weapons.Weapon;
-import dev.CodeWizz.shooty.weapons.types.AK47;
-import dev.CodeWizz.shooty.weapons.types.CombatPistol;
 import dev.CodeWizz.shooty.weapons.types.Hands;
-import dev.CodeWizz.shooty.weapons.types.HeavySniper;
-import dev.CodeWizz.shooty.weapons.types.MarksmanRifle;
-import dev.CodeWizz.shooty.weapons.types.Remington;
 
 public class Player {
 
@@ -34,7 +30,7 @@ public class Player {
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	private ArrayList<ID> gameObjectCollisionID = new ArrayList<>();
 	
-	private Slot[] slots;
+	public Slot[] slots;
 	private int selectedSlot = 0;
 		
 	
@@ -58,11 +54,11 @@ public class Player {
 			slots[i] = new Slot(gc.getWidth()/2 - totalWidth/2 + i * betweenslots + i * Slot.getW(), 10, new Hands());
 		}
 		
-		slots[0].setWeapon(new AK47());
-		slots[1].setWeapon(new Remington());
-		slots[2].setWeapon(new MarksmanRifle());
-		slots[3].setWeapon(new CombatPistol());
-		slots[4].setWeapon(new HeavySniper());
+		//slots[0].setWeapon(new AK47());
+		//slots[1].setWeapon(new Remington());
+		//slots[2].setWeapon(new MarksmanRifle());
+		//slots[3].setWeapon(new CombatPistol());
+		//slots[4].setWeapon(new HeavySniper());
 	}
 
 	public void update(GameContainer gc) {
@@ -90,6 +86,25 @@ public class Player {
 				}
 			}
 			
+			if(gc.getInput().isKeyDown(KeyEvent.VK_E)) {
+				for(GameObject object : gc.handler.object) {
+					if(object.getId() == ID.Crate) {
+						if(WMath.distance(position, object.getPosition()) < 24) {
+							((Crate)object).loot(gc);
+							break;
+						}
+					}
+				}
+			}
+			
+			if(gc.getInput().isKeyDown(KeyEvent.VK_G)) {
+				for(Pickup p : Shooty.picks) {
+					if(getBounds().intersects(p.getBounds())) {
+						p.pickup();
+						break;
+					}
+				}
+			}
 			
 			for(int i = 0; i < slots.length; i++) {
 				if(i == selectedSlot)
@@ -97,7 +112,6 @@ public class Player {
 				else
 					slots[i].setSelected(false);
 			}
-			
 			
 			physics(gc);
 		}
@@ -128,7 +142,10 @@ public class Player {
 			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
 			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
 			
-			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoPI + "", 40, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSN + "", 35, 67, 2, 0xffffffff);
 			
 		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.SG) {
 			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
@@ -136,7 +153,10 @@ public class Player {
 			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
 			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
 			
-			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSG + "", 40, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSN + "", 35, 67, 2, 0xffffffff);
 			
 		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.AR) {
 			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
@@ -144,7 +164,10 @@ public class Player {
 			r.drawImageUI(Textures.get("icons", 2, 1), 15, 50);
 			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
 			
-			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
+			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoAR + "", 40, 52, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSN + "", 35, 67, 2, 0xffffffff);
 			
 		} else if(slots[selectedSlot].getWeapon().getAmmoType() == Ammo.SN) {
 			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
@@ -152,7 +175,22 @@ public class Player {
 			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
 			r.drawImageUI(Textures.get("icons", 3, 1), 15, 65);
 			
+			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSN + "", 40, 67, 2, 0xffffffff);
+			
+		} else {
+			r.drawImageUI(Textures.get("icons", 0, 1), 10, 20);
+			r.drawImageUI(Textures.get("icons", 1, 1), 10, 35);
+			r.drawImageUI(Textures.get("icons", 2, 1), 10, 50);
+			r.drawImageUI(Textures.get("icons", 3, 1), 10, 65);
+			
+			r.drawText(Weapon.ammoPI + "", 35, 22, 2, 0xffffffff);
+			r.drawText(Weapon.ammoSG + "", 35, 37, 2, 0xffffffff);
+			r.drawText(Weapon.ammoAR + "", 35, 52, 2, 0xffffffff);
 			r.drawText(Weapon.ammoSN + "", 35, 67, 2, 0xffffffff);
+
 			
 		}
 		

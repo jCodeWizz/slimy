@@ -12,12 +12,12 @@ import dev.CodeWizz.shooty.weapons.DamageIndicator;
 public class Zombie extends GameObject {
 
 	private float vel = 2;
-	private float maxVel = 6;
 	
 	public Zombie(float x, float y) {
 		super(x, y);
 
 		this.gameObjectCollisionID.add(ID.Box);
+		this.gameObjectCollisionID.add(ID.Zombie);
 
 		this.canMove = true;
 
@@ -47,26 +47,8 @@ public class Zombie extends GameObject {
 	public void tick(GameContainer gc) {
 		Vector v = Shooty.inst.getPlayer().getPosition();
 		
-		
-		if(v.x < position.x) {
-			if(speed.x > -maxVel) {
-				forces.add(new Vector(-vel, 0));
-			}
-		} else if(v.x > position.x) {
-			if(speed.x < maxVel) {
-				forces.add(new Vector(vel, 0));
-			}
-		}
-		
-		if(v.y < position.y) {
-			if(speed.y > -maxVel) {
-				forces.add(new Vector(0, -vel));
-			}
-		} else if(v.y > position.y) {
-			if(speed.y < maxVel) {
-				forces.add(new Vector(0, vel));
-			}
-		}
+		speed.x = v.x > position.x ? vel : -vel;
+		speed.y = v.y > position.y ? vel : -vel;
 		
 		super.tick(gc);
 	}

@@ -28,6 +28,7 @@ public class CombatPistol extends Weapon {
 	
 		this.rarity = Rarity.Uncommon;
 	
+		this.id = 4;
 	}
 	
 	@Override

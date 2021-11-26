@@ -24,6 +24,7 @@ public class AK47 extends Weapon {
 		this.name = "AK 47";
 		this.ammoType = Ammo.AR;
 		
+		this.id = 1;
 	}
 	
 	@Override

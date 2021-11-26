@@ -24,6 +24,8 @@ public class Remington extends Weapon {
 		this.ammoType = Ammo.SG;
 		
 		this.rarity = Rarity.Rare;
+	
+		this.id = 12;
 	}
 	
 	@Override
