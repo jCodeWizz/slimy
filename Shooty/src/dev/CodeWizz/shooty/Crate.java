@@ -45,11 +45,15 @@ public class Crate extends GameObject {
 		r = new Random();
 		
 		weaponAmount = r.nextInt(2) + 1;
-		ammoAmount = r.nextInt(4) + 2;
+		ammoAmount = r.nextInt(3) + 1;
 		
 		if(weaponAmount > 0) {
 			for(int i = 0; i < weaponAmount; i++) {
-				loot.add(new Pickup((int)x, (int)y, selectRandomWeapon()));
+				Weapon w = selectRandomWeapon();
+				loot.add(new Pickup((int)x, (int)y, w.getAmmoType(), 30));
+				loot.add(new Pickup((int)x, (int)y, w.getAmmoType(), 30));
+				
+				loot.add(new Pickup((int)x, (int)y, w));
 			}
 		}
 		

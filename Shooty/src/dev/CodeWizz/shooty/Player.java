@@ -17,6 +17,7 @@ import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
 import dev.CodeWizz.engine.util.WMath;
 import dev.CodeWizz.shooty.weapons.Ammo;
+import dev.CodeWizz.shooty.weapons.Explosion;
 import dev.CodeWizz.shooty.weapons.Pickup;
 import dev.CodeWizz.shooty.weapons.Slot;
 import dev.CodeWizz.shooty.weapons.Weapon;
@@ -65,6 +66,11 @@ public class Player {
 		if (gc.getGameState() == State.Game) {
 			
 			slots[selectedSlot].update(gc);
+			
+			if(gc.getInput().isButtonDown(1)) {
+				gc.handler.addObject(new Explosion(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
+			}
+			
 			
 			if(gc.getInput().getScroll() > 0) {
 				if(selectedSlot < slots.length-1) {
