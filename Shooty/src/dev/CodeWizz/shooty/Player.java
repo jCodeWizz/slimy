@@ -21,6 +21,7 @@ import dev.CodeWizz.shooty.weapons.Explosion;
 import dev.CodeWizz.shooty.weapons.Pickup;
 import dev.CodeWizz.shooty.weapons.Slot;
 import dev.CodeWizz.shooty.weapons.Weapon;
+import dev.CodeWizz.shooty.weapons.types.GrenadeWeapon;
 import dev.CodeWizz.shooty.weapons.types.Hands;
 
 public class Player {
@@ -55,7 +56,7 @@ public class Player {
 			slots[i] = new Slot(gc.getWidth()/2 - totalWidth/2 + i * betweenslots + i * Slot.getW(), 10, new Hands());
 		}
 		
-		//slots[0].setWeapon(new AK47());
+		slots[0].setWeapon(new GrenadeWeapon(200));
 		//slots[1].setWeapon(new Remington());
 		//slots[2].setWeapon(new MarksmanRifle());
 		//slots[3].setWeapon(new CombatPistol());
@@ -66,11 +67,6 @@ public class Player {
 		if (gc.getGameState() == State.Game) {
 			
 			slots[selectedSlot].update(gc);
-			
-			if(gc.getInput().isButtonDown(1)) {
-				gc.handler.addObject(new Explosion(gc.getInput().getMouseX(), gc.getInput().getMouseY()));
-			}
-			
 			
 			if(gc.getInput().getScroll() > 0) {
 				if(selectedSlot < slots.length-1) {
@@ -101,15 +97,22 @@ public class Player {
 						}
 					}
 				}
-			}
-			
-			if(gc.getInput().isKeyDown(KeyEvent.VK_G)) {
+				
 				for(Pickup p : Shooty.picks) {
-					if(getBounds().intersects(p.getBounds())) {
+					if(getBounds().intersects(p.getBounds()) && p.isHasWeapon()) {
 						p.pickup();
 						break;
 					}
-				}
+				}	
+			}
+			
+			if(gc.getInput().isKey(KeyEvent.VK_E)) {
+				for(Pickup p : Shooty.picks) {
+					if(getBounds().intersects(p.getBounds()) && p.isHasAmmo()) {
+						p.pickup();
+						break;
+					}
+				}	
 			}
 			
 			for(int i = 0; i < slots.length; i++) {

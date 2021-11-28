@@ -9,6 +9,7 @@ import dev.CodeWizz.engine.GameContainer;
 import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.object.Box;
+import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.shooty.weapons.Ammo;
 import dev.CodeWizz.shooty.weapons.DamageIndicator;
 import dev.CodeWizz.shooty.weapons.Pickup;
@@ -93,5 +94,10 @@ public class Shooty extends AbstractGame {
 	
 	public static void removeIndicator(DamageIndicator i) {
 		indis.remove(i);
+	}
+
+	@Override
+	public void renderBackground(GameContainer gc, Renderer r) {
+		r.drawImage(Textures.get("map"), 0, 0);
 	}
 }

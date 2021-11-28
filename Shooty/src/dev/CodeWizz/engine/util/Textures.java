@@ -16,14 +16,23 @@ public class Textures {
 	public static BufferedImage stump;
 	public static BufferedImage nest;
 	
+	public static Image[] explosion;
+	
 	public void load() {
 		WDebug.log("[System]: Loading textures...");
+		
+		explosion = new Image[12];
+		
+		for(int i = 0; i < explosion.length; i++) {
+			explosion[i] = new Image("/assets/textures/explosions/e1/" + (i+1) + ".png");
+		}
 		
 		listT.put("US", new ImageTile("/assets/textures/guns/icons/US.png", 32, 15));
 		listT.put("USSR", new ImageTile("/assets/textures/guns/icons/USSR.png", 33, 17));
 		listT.put("G", new ImageTile("/assets/textures/guns/icons/G.png", 33, 17));
 		listT.put("UK", new ImageTile("/assets/textures/guns/icons/UK.png", 33, 17));
 		listT.put("icons", new ImageTile("/assets/textures/ui/icons.png", 24, 24));
+		listT.put("grenades", new ImageTile("/assets/textures/guns/icons/grenade.png", 16, 16));
 		
 		list.put("gunholder", new Image("/assets/textures/ui/gunholder.png"));
 		list.put("hands", new Image("/assets/textures/guns/icons/hands.png"));
@@ -31,6 +40,8 @@ public class Textures {
 		list.put("slotselected", new Image("/assets/textures/ui/slotselected.png"));
 		list.put("info", new Image("/assets/textures/ui/info.png"));
 		list.put("crate", new Image("/assets/textures/crate.png"));
+		
+		list.put("map", new Image("/assets/maps/map1.png"));
 		
 		WDebug.log("[System]: Loaded in " + list.size() + " textures!");
 		WDebug.log("[System]: Loaded in " + listT.size() + " texture tiles!");

@@ -98,4 +98,36 @@ public class Pickup {
 			}
 		}
 	}
+
+	public boolean isHasWeapon() {
+		return hasWeapon;
+	}
+
+	public void setHasWeapon(boolean hasWeapon) {
+		this.hasWeapon = hasWeapon;
+	}
+
+	public Ammo getAmmoType() {
+		return ammoType;
+	}
+
+	public void setAmmoType(Ammo ammoType) {
+		this.ammoType = ammoType;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public boolean isHasAmmo() {
+		return hasAmmo;
+	}
+
+	public void setHasAmmo(boolean hasAmmo) {
+		this.hasAmmo = hasAmmo;
+	}
 }

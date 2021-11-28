@@ -685,12 +685,14 @@ public class Renderer {
 		for (int yy = newY; yy < newHeight; yy++) {
 			for (int xx = newX; xx < newWidth; xx++) {
 				for (int i = 0; i < scale; i++) {
-					setPixel(xx * scale + x + i, yy * scale + y + i, image.getP()[xx + yy * image.getW()]);
-					if (image.getNormalMap() != null) {
-						// System.out.println(image.getNormalMap().getRGB(xx, yy));
+					for (int j = 0; j < scale; j++) {
+						setPixel(xx * scale + x + i, yy * scale + y + j, image.getP()[xx + yy * image.getW()]);
+						if (image.getNormalMap() != null) {
+							// System.out.println(image.getNormalMap().getRGB(xx, yy));
 
-						if (((image.getP()[xx + yy * image.getW()] >> 24) & 0xff) == 255) {
-							setLightBlock(xx * scale + x + i, yy * scale + i + y, image.getLightBlock());
+							if (((image.getP()[xx + yy * image.getW()] >> 24) & 0xff) == 255) {
+								setLightBlock(xx * scale + x + i, yy * scale + j + y, image.getLightBlock());
+							}
 						}
 					}
 				}

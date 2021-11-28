@@ -50,8 +50,8 @@ public class Vector {
 	public static Vector forceToVector(float force, Vector a, Vector b) {
 		Vector v = new Vector();
 
-		int dx = (int) b.x - (int) a.x;
-		int dy = (int) b.y - (int) a.y;
+		double dx = b.x - a.x;
+		double dy = b.y - a.y;
 		
 		double angle;
 

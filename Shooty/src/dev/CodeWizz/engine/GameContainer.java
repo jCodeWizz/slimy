@@ -141,6 +141,7 @@ public class GameContainer implements Runnable {
 
 			if (render) {
 				renderer.clear();
+				game.renderBackground(this, renderer);
 				handler.render(this, renderer);
 				game.render(this, renderer);
 				

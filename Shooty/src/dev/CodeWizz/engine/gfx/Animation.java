@@ -14,6 +14,13 @@ public class Animation {
 		index = 0;
 	}
 	
+	public Animation(int speed, Image[] frames, int a) {
+		this.speed = speed;
+		this.frames = frames;
+		
+		index = 0;
+	}
+	
 	public void tick() {
 		
 		if(counter < speed) 
