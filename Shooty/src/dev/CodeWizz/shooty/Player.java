@@ -17,7 +17,6 @@ import dev.CodeWizz.engine.util.Textures;
 import dev.CodeWizz.engine.util.Vector;
 import dev.CodeWizz.engine.util.WMath;
 import dev.CodeWizz.shooty.weapons.Ammo;
-import dev.CodeWizz.shooty.weapons.Explosion;
 import dev.CodeWizz.shooty.weapons.Pickup;
 import dev.CodeWizz.shooty.weapons.Slot;
 import dev.CodeWizz.shooty.weapons.Weapon;
@@ -56,7 +55,7 @@ public class Player {
 			slots[i] = new Slot(gc.getWidth()/2 - totalWidth/2 + i * betweenslots + i * Slot.getW(), 10, new Hands());
 		}
 		
-		slots[0].setWeapon(new GrenadeWeapon(200));
+		slots[0].setWeapon(new GrenadeWeapon(20));
 		//slots[1].setWeapon(new Remington());
 		//slots[2].setWeapon(new MarksmanRifle());
 		//slots[3].setWeapon(new CombatPistol());
