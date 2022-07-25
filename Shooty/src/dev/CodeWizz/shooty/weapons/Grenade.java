@@ -19,7 +19,7 @@ public class Grenade extends GameObject {
 		gravity = 0f;
 		friction = -0.075f;
 		bounce = -0.2f;
-		mass = 5;
+		mass = 50;
 		this.forces.add(v);
 		airFrictionY = 0.075f;
 		airFrictionX = 0.075f;
