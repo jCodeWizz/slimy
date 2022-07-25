@@ -10,7 +10,7 @@ import dev.CodeWizz.engine.util.Vector;
 
 public class Planet {
 
-	private final double c = 6.67408 * Math.pow(10, -11);
+	private final double c = 6.67408 * Math.pow(10, -8);
 
 	private List<Vector> forces = new CopyOnWriteArrayList<>();
 	public Vector position, speed, acc;
@@ -55,11 +55,14 @@ public class Planet {
 
 			for (Planet p : Shooty.inst.planets) {
 				if(!p.equals(this)) {
-					double force = c * ((mass * p.mass) / (r * r));
+					
 					Vector v = new Vector();
 
 					int dx = (int) p.position.x - (int) position.x;
 					int dy = (int) p.position.y - (int) position.y;
+					
+					double d = Math.sqrt((dx * dx) + (dy * dy));
+					double force = c * ((mass * p.mass) / (d * d));
 					
 					double angle;
 

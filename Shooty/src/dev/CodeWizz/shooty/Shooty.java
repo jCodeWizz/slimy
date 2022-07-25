@@ -45,10 +45,6 @@ public class Shooty extends AbstractGame {
 		}
 		
 		player.render(gc, r);
-		
-		
-		
-		
 	}
 
 	@Override
