@@ -6,11 +6,35 @@ import dev.CodeWizz.shooty.Shooty;
 public class Camera {
 
 	private int x, y;
+	private final int bX = 240, bY = 260;
 	
 	public void update(GameContainer gc) {
 		
-		x = (int) Shooty.inst.getPlayer().getPosition().x - 8 - gc.getWidth() / 2;
-		y = (int) Shooty.inst.getPlayer().getPosition().y - 8 - gc.getHeight() / 2;
+		
+		int tempX = (int) Shooty.inst.getPlayer().getPosition().x - 8 - gc.getWidth() / 2;
+		int tempY = (int) Shooty.inst.getPlayer().getPosition().y - 8 - gc.getHeight() / 2;
+		
+		if(tempX > 0 && tempX < bX) {
+			x = tempX;
+		}
+		if(tempX < 0) {
+			x = 0;
+		}
+		if(tempX > bX) {
+			x = bX;
+		}
+		
+		if(tempY > 0 && tempY < bY) {
+			y = tempY;
+		}
+		if(tempY < 0) {
+			y = 0;
+		}
+		if(tempY > bY) {
+			y = bY;
+		}
+		
+		
 		gc.getRenderer().setCamX(x);
 		gc.getRenderer().setCamY(y);
 	}
