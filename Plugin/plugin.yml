@@ -1,0 +1,12 @@
+name: MainKingdomEventPlugin
+main: dev.codewizz.Main
+version: 1.0
+api-version: 1.19
+
+commands:
+   prof:
+      description: Open prof menu
+      usage: /<command>
+   kingdom:
+      description: Open kingdom menu
+      usage: /<command>
