@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Location;
 
-import src.dev.codewizz.players.PlayerInfo;
+import dev.codewizz.players.PlayerInfo;
 
 public class Kingdom {
 
