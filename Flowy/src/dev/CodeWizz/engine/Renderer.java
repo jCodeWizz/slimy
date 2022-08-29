@@ -861,5 +861,10 @@ public class Renderer {
 	public void setFont(Font font) {
 		this.font = font;
 	}
+	
+	public static int changeAlpha(int origColor, int userInputedAlpha) {
+	    origColor = origColor & 0x00ffffff; //drop the previous alpha value
+	    return (userInputedAlpha << 24) | origColor; //add the one the user inputted
+	}
 
 }

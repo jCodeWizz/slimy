@@ -13,12 +13,16 @@ public class Cell {
 	public int x, y, indexX, indexY;
 	public Tile tile = Tile.Ground;
 	
+	public WaterState water;
+	
 	public Cell(int iX, int jY) {
 		this.x = iX*WIDTH;
 		this.y = jY*HEIGHT;
 		
 		this.indexX = iX;
 		this.indexY = jY;
+		
+		this.water = new WaterState(this);
 	}
 	
 	public void tick(GameContainer gc) {
@@ -31,6 +35,7 @@ public class Cell {
 	
 	public void render(GameContainer gc, Renderer r) {
 		r.fillRect(x, y, WIDTH, HEIGHT, tile.getColor(), Light.NONE);
+		r.fillRect(x, y, WIDTH, HEIGHT, Renderer.changeAlpha(0xff0000ff, (int)water.water), Light.NONE);
 	}
 	
 	public static Cell getCell(int mx, int my) {

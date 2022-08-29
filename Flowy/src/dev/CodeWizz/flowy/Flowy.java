@@ -6,10 +6,14 @@ import dev.CodeWizz.engine.Renderer;
 import dev.CodeWizz.engine.gfx.light.Light;
 import dev.CodeWizz.engine.hud.Button;
 import dev.CodeWizz.engine.hud.HudManager;
+import dev.CodeWizz.engine.hud.ISliderListener;
+import dev.CodeWizz.engine.hud.Slider;
 import dev.CodeWizz.engine.util.Textures;
 
-public class Flowy extends AbstractGame {
+public class Flowy extends AbstractGame implements ISliderListener {
 
+	public static int brushSize = 50;
+	
 	private Tool tool = Tool.Point;
 	private Tile tile = Tile.Sand;
 	private HudManager hud;
@@ -29,7 +33,15 @@ public class Flowy extends AbstractGame {
 			Cell cell = Cell.getCell(gc.getInput().getMouseX(), gc.getInput().getMouseY());
 			if(cell != null) {
 				if(tool == Tool.Point) {
-					cell.tile = tile;
+					for(int i = -(brushSize/2); i < brushSize/2; i++) {
+						for(int j = -(brushSize/2); j < brushSize/2; j++) {
+							Cell c = Cell.getCell(i + cell.indexX, j + cell.indexY);
+							if(c != null) {
+								c.tile = tile;
+							}
+						}
+					}
+					//cell.tile = tile;
 				} else if(tool == Tool.Fill) {
 					cell.fill(tile, cell.tile);
 				} else if(tool == Tool.Line) {
@@ -114,12 +126,28 @@ public class Flowy extends AbstractGame {
 				tile = Tile.Clay;
 			}
 		});
-			
+		
+		hud.addComponent(new Slider(100, 100, 200, this));
 	}	
 	
 	public static void main(String[] args) {
 		GameContainer.showInfo();
 		GameContainer gc = new GameContainer(new Flowy());
 		gc.start();
+	}
+
+	@Override
+	public void onSliderSet(float value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSliderMove(float value) {
+		for(int i = 0; i < Cell.cells.length; i++) {
+			for(int j = 0; j < Cell.cells[i].length; j++) {
+				Cell.cells[i][j].water.water = value*255;
+			}
+		}
 	}
 }
