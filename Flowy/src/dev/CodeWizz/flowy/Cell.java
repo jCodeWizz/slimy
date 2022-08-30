@@ -35,7 +35,7 @@ public class Cell {
 	
 	public void render(GameContainer gc, Renderer r) {
 		r.fillRect(x, y, WIDTH, HEIGHT, tile.getColor(), Light.NONE);
-		r.fillRect(x, y, WIDTH, HEIGHT, Renderer.changeAlpha(0xff0000ff, (int)water.water), Light.NONE);
+		r.fillRect(x, y, WIDTH, HEIGHT, Renderer.changeAlpha(0xff0000ff, (int)(water.water*100f)), Light.NONE);
 	}
 	
 	public static Cell getCell(int mx, int my) {
@@ -68,10 +68,10 @@ public class Cell {
 	public Cell[] getNeighbours() {
 		Cell[] data = new Cell[4];
 		
-		data[0] = getCellIndex(indexX-1, indexY);
+		data[0] = getCellIndex(indexX, indexY+1);
 		data[1] = getCellIndex(indexX+1, indexY);
-		data[2] = getCellIndex(indexX, indexY-1);
-		data[3] = getCellIndex(indexX, indexY+1);
+		data[2] = getCellIndex(indexX-1, indexY);
+		data[3] = getCellIndex(indexX, indexY-1);
 		
 		return data;
 	}

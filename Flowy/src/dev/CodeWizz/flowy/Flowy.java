@@ -15,6 +15,7 @@ public class Flowy extends AbstractGame {
 	
 	private Tool tool = Tool.Point;
 	private Tile tile = Tile.Sand;
+	public boolean drawingWater = false;
 	public float height = 0f;
 
 	public Flowy() {
@@ -28,6 +29,13 @@ public class Flowy extends AbstractGame {
 
 	@Override
 	public void update(GameContainer gc, float dt) {
+		for (int i = Cell.SCALE-1; i > 0; i--) {
+			for (int j = Cell.SCALE-1; j > 0; j--) {
+				Cell.cells[j][i].water.update();
+			}
+		}
+		
+		
 		if(gc.getInput().isButton(1)) {
 			Cell cell = Cell.getCell(gc.getInput().getMouseX(), gc.getInput().getMouseY());
 			if(cell != null) {
@@ -36,7 +44,12 @@ public class Flowy extends AbstractGame {
 						for(int j = -(brushSize/2); j < brushSize/2; j++) {
 							Cell c = Cell.getCellIndex(i + cell.indexX, j + cell.indexY);
 							if(c != null) {
-								c.tile = tile;
+								if(drawingWater) {
+									c.water.setAsSource();
+								} else {
+									c.tile = tile;
+									c.water.height = height;
+								}
 							}
 						}
 					}
@@ -69,13 +82,27 @@ public class Flowy extends AbstractGame {
 		
 		r.fillRectUI(540, 94, gc.getWidth(), 5, 0xff222034, Light.NONE);
 		
-		r.drawText("HEIGHT: " + height, 545 + 213, 35, 2, 0xffffffff);
+		r.drawText("HOOGTE: " + height, 545 + 213, 35, 2, 0xffffffff);
+		
+		r.fillRectUI(540, 185, gc.getWidth(), 5, 0xff222034, Light.NONE);
+
 	}
 
 	@Override
 	public void init(GameContainer gc) {
 		int b = 545;
 
+		HudManager.addComponent(new Slider(b+217, 58, 169) {
+			@Override
+			public void valueSet(float value) {
+				float c = value*2f-1;
+				int b = (int)(c*10);
+				
+				
+				height = (b/10f);
+			}
+		});
+		
 		// FILL TOOL ICON BUTTON
 		HudManager.addComponent(new Button(b+20, 25, "", Textures.get("icon"), Textures.get("icon-pressed"), Textures.get("bucket-icon"), 2) {
 			@Override
@@ -103,14 +130,14 @@ public class Flowy extends AbstractGame {
 		
 		
 		// GROUND TOOL ICON BUTTON
-		HudManager.addComponent(new Button(b+20, 119, "GROUND", Textures.get("button"), Textures.get("button-pressed"), 2) {
+		HudManager.addComponent(new Button(b+20, 119, "GROND", Textures.get("button"), Textures.get("button-pressed"), 2) {
 			@Override
 			public void declick(GameContainer gc) {
 				tile = Tile.Ground;
 			}
 		});
 		// GROUND TOOL ICON BUTTON
-		HudManager.addComponent(new Button(b+128, 119, "SAND", Textures.get("button"), Textures.get("button-pressed"), 2) {
+		HudManager.addComponent(new Button(b+128, 119, "ZAND", Textures.get("button"), Textures.get("button-pressed"), 2) {
 			@Override
 			public void declick(GameContainer gc) {
 				tile = Tile.Sand;
@@ -118,24 +145,22 @@ public class Flowy extends AbstractGame {
 		});
 			
 		// GROUND TOOL ICON BUTTON
-		HudManager.addComponent(new Button(b+236, 119, "CLAY", Textures.get("button"), Textures.get("button-pressed"), 2) {
+		HudManager.addComponent(new Button(b+236, 119, "KLEI", Textures.get("button"), Textures.get("button-pressed"), 2) {
 			@Override
 			public void declick(GameContainer gc) {
 				tile = Tile.Clay;
 			}
 		});
 		
-		HudManager.addComponent(new Slider(b+217, 58, 169) {
+		HudManager.addComponent(new Button(b+20, 200, "WATER", Textures.get("button"), Textures.get("button-pressed"), 2) {
 			
 			@Override
-			public void valueSet(float value) {
-				float c = value*2f-1;
-				int b = (int)(c*10);
-				
-				
-				height = (b/10f);
+			public void declick(GameContainer gc) {
+				drawingWater = !drawingWater;
 			}
+			
 		});
+		
 	}	
 	
 	public static void main(String[] args) {
