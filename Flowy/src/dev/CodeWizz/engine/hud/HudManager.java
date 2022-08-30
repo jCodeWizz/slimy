@@ -12,32 +12,33 @@ public class HudManager {
 	public static List<IHudComponent> comps = new CopyOnWriteArrayList<>();
 	
 	
-	public void update(GameContainer gc) {
+	public static void update(GameContainer gc) {
 		for(IHudComponent a : comps) {
 			a.tick(gc);
 		}
 		
 	}
 	
-	public void render(GameContainer gc, Renderer r) {
+	
+	public static void render(GameContainer gc, Renderer r) {
 		for(IHudComponent a : comps) {
 			a.render(gc, r);
 		}
 	}
 	
-	public void addComponent(IHudComponent a) {
+	public static void addComponent(IHudComponent a) {
 		comps.add(a);
 	}
 	
-	public void removeComponent(IHudComponent a) {
+	public static void removeComponent(IHudComponent a) {
 		comps.remove(a);
 	}
 	
-	public void clear() {
+	public static void clear() {
 		comps.clear();
 	}
 	
-	public void clear(UIID id) {
+	public static void clear(UIID id) {
 		for(IHudComponent comp : comps) {
 			if(comp.getID() == id) {
 				comps.remove(comp);

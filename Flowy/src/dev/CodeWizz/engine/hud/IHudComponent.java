@@ -14,6 +14,7 @@ public interface IHudComponent {
 	public Rectangle getBounds();
 	public void click(GameContainer gc);
 	public void declick(GameContainer gc);
+	public void valueSet(float value);
 	public void press();
 	public void depress();
 	

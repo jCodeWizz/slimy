@@ -123,7 +123,7 @@ public class GameContainer implements Runnable {
 				update();
 				game.update(this, (float) UPDATE_CAP);
 				handler.tick(this);
-				hMan.update(this);
+				HudManager.update(this);
 				camera.update(this);
 
 				input.update();
@@ -145,7 +145,7 @@ public class GameContainer implements Runnable {
 				
 				
 				game.renderUI(this, renderer);
-				hMan.render(this, renderer);
+				HudManager.render(this, renderer);
 
 				if(loaderTime < 100) {
 					renderer.fillRect(0, 0, width, height, 0xffccffff, Light.NONE);

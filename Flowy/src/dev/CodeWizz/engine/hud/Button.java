@@ -122,4 +122,10 @@ public class Button implements IHudComponent {
 	public void depress() {
 		this.pressed = false;
 	}
+
+	@Override
+	public void valueSet(float value) {
+		// TODO Auto-generated method stub
+		
+	}
 }

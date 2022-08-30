@@ -105,4 +105,11 @@ public class DropDown implements IHudComponent {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void valueSet(float value) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -6,7 +6,7 @@ import dev.CodeWizz.engine.gfx.light.Light;
 
 public class Cell {
 
-	public static final int WIDTH = 1, HEIGHT = 1, SCALE = 27*20; 
+	public static final int WIDTH = 2, HEIGHT = 2, SCALE = 27*10; 
 	
 	public static Cell[][] cells = new Cell[SCALE][SCALE];
 	

@@ -7,6 +7,8 @@ public class WaterState {
 	public float water = 0.0f;
 	public float distance = 0f;
 	public float height = 0f;
+	public float toughness = 0f;
+	
 	public Vector speed;
 	public Cell cell;
 	
@@ -26,6 +28,6 @@ public class WaterState {
 	}
 	
 	public float tryMove(Cell a) {
-		
+		return 0f;
 	}
 }

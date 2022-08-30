@@ -144,6 +144,12 @@ public class Chat implements IHudComponent, ITextInput {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void valueSet(float value) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 class Line {
