@@ -30,11 +30,10 @@ public class Flowy extends AbstractGame {
 	@Override
 	public void update(GameContainer gc, float dt) {
 		for (int i = Cell.SCALE-1; i > 0; i--) {
-			for (int j = Cell.SCALE-1; j > 0; j--) {
+			for (int j = 0; j < Cell.SCALE; j++) {
 				Cell.cells[j][i].water.update();
 			}
 		}
-		
 		
 		if(gc.getInput().isButton(1)) {
 			Cell cell = Cell.getCell(gc.getInput().getMouseX(), gc.getInput().getMouseY());

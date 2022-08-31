@@ -69,8 +69,8 @@ public class Cell {
 		Cell[] data = new Cell[4];
 		
 		data[0] = getCellIndex(indexX, indexY+1);
-		data[1] = getCellIndex(indexX+1, indexY);
-		data[2] = getCellIndex(indexX-1, indexY);
+		data[1] = getCellIndex(indexX-1, indexY);
+		data[2] = getCellIndex(indexX+1, indexY);
 		data[3] = getCellIndex(indexX, indexY-1);
 		
 		return data;
