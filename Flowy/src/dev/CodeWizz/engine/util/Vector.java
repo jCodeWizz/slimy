@@ -14,9 +14,11 @@ public class Vector {
 		this.y = 0;
 	}
 	
-	public void devide(float dev) {
+	public Vector devide(float dev) {
 		this.x /= dev;
 		this.y /= dev;
+		
+		return this;
 	}
 	
 	@Override
