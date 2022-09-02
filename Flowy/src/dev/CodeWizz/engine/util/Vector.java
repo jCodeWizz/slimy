@@ -14,6 +14,11 @@ public class Vector {
 		this.y = 0;
 	}
 	
+	public Vector(Vector vec) {
+		this.x = vec.x;
+		this.y = vec.y;
+	}
+	
 	public Vector devide(float dev) {
 		this.x /= dev;
 		this.y /= dev;
@@ -29,6 +34,11 @@ public class Vector {
 	public void add(Vector vec) {
 		this.x += vec.x;
 		this.y += vec.y;
+	}
+	
+	public void add(float a, float b) {
+		this.x += a;
+		this.y += b;
 	}
 	
 	public Vector add2(Vector vec) {

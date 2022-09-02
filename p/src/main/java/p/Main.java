@@ -8,6 +8,16 @@ import net.sourceforge.tess4j.TesseractException;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		float x = -5;
+		
+		
+		System.out.println(x/Math.abs(x));
+		
+		
+		
+		
+		/*
 		Tesseract tesseract = new Tesseract();
 		tesseract.setDatapath("C:\\Users\\tomhe\\Desktop\\OCR\\Tess4J\\tessdata");
 		tesseract.setLanguage("ENG");
@@ -17,5 +27,6 @@ public class Main {
 		} catch (TesseractException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

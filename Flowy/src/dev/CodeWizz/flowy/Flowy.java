@@ -36,6 +36,8 @@ public class Flowy extends AbstractGame {
 	@Override
 	public void update(GameContainer gc, float dt) {
 		for (Water p : Flowy.p) {
+			if(p.pos.x == 1 || p.pos.x == 538 || p.pos.y == 1 || p.pos.y == 538)
+				p.remove = true;
 			p.update();
 		}
 
@@ -108,6 +110,8 @@ public class Flowy extends AbstractGame {
 
 				displayHeight = b;
 				height = value;
+				
+				System.out.println(height);
 			}
 		});
 
