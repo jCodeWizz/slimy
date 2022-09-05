@@ -31,10 +31,10 @@ public class Planny {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH;mm;ss");
 			LocalDateTime now = LocalDateTime.now();
 
-			file = new File("C:\\Users\\tomhe\\Desktop\\vulplanningen\\vulplanning_" + dtf.format(now) + ".txt");
-			containerFile = new File("C:\\Users\\tomhe\\Desktop\\vulplanningen\\containers.txt");
-			teamFile = new File("C:\\Users\\tomhe\\Desktop\\vulplanningen\\team.txt");
-
+			file = new File("./vulplanning_" + dtf.format(now) + ".txt");
+			containerFile = new File("./containers.txt");
+			teamFile = new File("./team.txt");
+            
 			try {
 				boolean young = false;
 				Scanner scannerTeam = new Scanner(teamFile);
@@ -182,11 +182,28 @@ public class Planny {
 			try {
 				PrintWriter bw = new PrintWriter(new FileWriter(file));
 
+				bw.write("\n");
+				bw.write("\n");
+				bw.write("Total time: " + totalTime + "Minutes | Average time: " + averageTime + " Minutes \n");
+				bw.write("\n");
+				bw.write("\n");
+				
+				
+				
+				
+				
+				
+				
 				bw.write("---CONTAINERS SORTED BY CODE---\n");
 				for (Container c : Container.getOrderedList()) {
 					bw.write("Container[" + c.code + "] " + c.minutes + " Minutes | " + c.p.name + "\n");
 				}
+				bw.write("\n");
+				bw.write("\n");
 				bw.write("---CONTAINERS SORTED BY PERSON---\n");
+				bw.write("\n");
+				bw.write("\n");
+
 				for (Person p : team) {
 
 					bw.write(p.name + "\n");
