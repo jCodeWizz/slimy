@@ -11,8 +11,8 @@ import dev.CodeWizz.engine.util.WMath;
 
 public class Water {
 
-	public static Random r = new Random();
-	public static int R = 2;
+	public static Random random = new Random();
+	public static int R = 4;
 	public static float MASS = 18.0f, G = 9.18f, Cw = -0.06f;
 	
 	public ArrayList<Vector> forces = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Water {
 		speed = new Vector();
 		acc = new Vector();
 		
-		//forces.add(new Vector(r.nextFloat()*2f-1f, r.nextFloat()*2f-1f));
+		forces.add(new Vector(random.nextFloat()*2f-1f, 0));
 	}
 	
 	public void update() {
@@ -39,12 +39,10 @@ public class Water {
 		forces.add(new Vector(0.5f * Cw * 2 * speed.x, 0.5f * Cw * 2 * speed.y));
 		
 		for(Water w : Flowy.p) {
-			if(WMath.distance(w.pos.x, w.pos.y, pos.x, pos.y) <= R*2) {
-				Vector a = w.speed;
-				Vector b = speed;
-				
-				w.speed = b;
-				speed = a;
+			if(!w.equals(this)) {
+				if(WMath.distance(w.pos.x, w.pos.y, pos.x, pos.y) <= R*2) {
+					speed.multiply(-1f);
+				}
 			}
 		}
 		
@@ -92,6 +90,6 @@ public class Water {
 	}
 	
 	public void render(GameContainer gc, Renderer r) {
-		r.fillRect((int)pos.x, (int)pos.y, R, R, 0xff0000ff, Light.NONE);
+		r.fillRect((int)pos.x-R, (int)pos.y-R, R*2, R*2, 0xff0000ff, Light.NONE);
 	}
 }

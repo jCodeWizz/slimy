@@ -41,7 +41,7 @@ public class Flowy extends AbstractGame {
 			p.update();
 		}
 
-		if (gc.getInput().isButton(1)) {
+		if (gc.getInput().isButtonDown(1)) {
 			Cell cell = Cell.getCell(gc.getInput().getMouseX(), gc.getInput().getMouseY());
 			if (cell != null) {
 				if (tool == Tool.Point) {
